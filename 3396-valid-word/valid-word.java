@@ -3,7 +3,9 @@ class Solution {
         word=word.toLowerCase();
         boolean v=false;
         boolean con=false;
+
         if(word.length()<3) return false;
+        
         for(int i=0;i<word.length();i++){
             char c = word.charAt(i);
             if(Character.isLetter(c)){
