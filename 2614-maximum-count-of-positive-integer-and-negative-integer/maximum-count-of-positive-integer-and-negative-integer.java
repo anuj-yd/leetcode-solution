@@ -11,7 +11,7 @@ class Solution {
                 continue;
             }
         }
-        return Math.max(pos,neg);
+        return (int)Math.max(pos,neg);
         
     }
 }
