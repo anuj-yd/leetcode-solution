@@ -8,10 +8,7 @@ class Solution {
                 j++;
             }
         }
-        for(int i=0;i<j;i++){
-            nums[i]=arr[i];
-        }
-        for(int i=j;i<nums.length;i++){
+        for(int i=0;i<arr.length;i++){
             nums[i]=arr[i];
         }
     }
