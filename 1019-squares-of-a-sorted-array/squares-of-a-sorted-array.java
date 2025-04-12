@@ -1,8 +1,10 @@
 class Solution {
     public int[] sortedSquares(int[] nums){
         int ans[] = new int[nums.length];
-        for(int i=0;i<nums.length;i++){
+        int i=0;
+        while(i<nums.length){
             ans[i]=nums[i]*nums[i];
+            i++;
         }
         Arrays.sort(ans);
         return ans;
