@@ -5,7 +5,7 @@ class Solution {
         }
         Arrays.sort(nums1);
         for(int i=0;i<m+n;i++){
-            System.out.print(nums1[i]+" ");
+            System.out.print(nums1[i]+" "); 
         }
     }
 }
