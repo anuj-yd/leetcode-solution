@@ -1,19 +1,19 @@
 class Solution {
-    public int singleNonDuplicate(int[] nums) {
-        int s = 0;
-        int e = nums.length - 1;
-
-        while(s<e){
-            int mid = (s+e)/2;
-            if(mid%2!=0){
+    public int singleNonDuplicate(int[] nums){
+        int l=0;
+        int h=nums.length-1;
+        while(l<h){
+            int mid = l+(h-l)/2;
+            if(mid%2==1){
                 mid--;
             }
-            if(nums[mid] == nums[mid+1]) {
-                s=mid+2;
+            if(nums[mid]==nums[mid+1]){
+                l=mid+2;
             }else{
-                e=mid;
+                h=mid;
             }
         }
-        return nums[s];
+        return nums[l];
+        
     }
 }
