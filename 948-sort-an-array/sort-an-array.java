@@ -1,34 +1,43 @@
 class Solution {
-    public int[] sortArray(int[] nums) {
-        if (nums == null || nums.length <= 1) return nums;
-        mergeSort(nums, 0, nums.length - 1);
-        return nums;
-    }
+    static Random rand = new Random();
 
-    private void mergeSort(int[] arr, int left, int right) {
-        if (left >= right) return;
-        int mid = left + (right - left) / 2;
-        mergeSort(arr, left, mid);
-        mergeSort(arr, mid + 1, right);
-        merge(arr, left, mid, right);
-    }
+    static int partition(int[] arr, int l, int h) {
+        int pivotIndex = rand.nextInt(h - l + 1) + l;
+        swap(arr, pivotIndex, h);
 
-    private void merge(int[] arr, int left, int mid, int right) {
-        int[] temp = new int[right - left + 1];
-        int i = left, j = mid + 1, k = 0;
+        int pvt = arr[h];
+        int i = l - 1;
 
-        while (i <= mid && j <= right) {
-            if (arr[i] <= arr[j]) {
-                temp[k++] = arr[i++];
-            } else {
-                temp[k++] = arr[j++];
+        for (int j = l; j < h; j++) {
+            if (arr[j] <= pvt) {
+                i++;
+                swap(arr, i, j);
             }
         }
 
-        while (i <= mid) temp[k++] = arr[i++];
-        while (j <= right) temp[k++] = arr[j++];
+        i++;
+        swap(arr, i, h);
+        return i;
+    }
 
-        // Copy back sorted temp array to original
-        System.arraycopy(temp, 0, arr, left, temp.length);
+    static void quickSort(int[] arr, int l, int h) {
+        if (l < h) {
+            int p = partition(arr, l, h);
+            quickSort(arr, l, p - 1);
+            quickSort(arr, p + 1, h);
+        }
+    }
+
+    static void swap(int[] arr, int i, int j) {
+        if (i != j) {
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    public int[] sortArray(int[] nums) {
+        quickSort(nums, 0, nums.length - 1);
+        return nums;
     }
 }
