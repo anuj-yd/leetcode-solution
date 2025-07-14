@@ -31,7 +31,6 @@ class Solution {
                 st.push(Integer.parseInt(op));
             }
         } 
-        return st.peek();
-        
+        return st.pop();
     }
 }
