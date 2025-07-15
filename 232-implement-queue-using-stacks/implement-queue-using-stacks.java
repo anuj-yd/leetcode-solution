@@ -8,22 +8,34 @@ class MyQueue {
         
     }
     public void push(int x){
-        while(st.size()>0){
-            gt.push(st.pop());
-        }
+        
         st.push(x);
-        while(gt.size()>0){
-            st.push(gt.pop());
-        }
+        
         
     }
     
     public int pop() {
-        return st.pop();
+        while(st.size()>1){
+            gt.push(st.pop());
+        }
+        int x = st.pop();
+        while(gt.size()>0){
+            st.push(gt.pop());
+        }
+
+        return x;
     }
     
     public int peek() {
-        return st.peek();
+        while(st.size()>1){
+            gt.push(st.pop());
+        }
+        int x = st.peek();
+        while(gt.size()>0){
+            st.push(gt.pop());
+        }
+
+        return x;
     }
     
     public boolean empty() {
