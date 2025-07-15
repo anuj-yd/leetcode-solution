@@ -1,23 +1,23 @@
 class Solution {
     public boolean isValid(String word){
-        word=word.toLowerCase();
-        boolean v=false;
-        boolean con=false;
 
-        if(word.length()<3) return false;
-        
-        for(int i=0;i<word.length();i++){
-            char c = word.charAt(i);
-            if(Character.isLetter(c)){
-                if(c=='a'||c=='e'||c=='i'||c=='o'||c=='u'){   
-                    v=true;
+        String w = word.toLowerCase();
+        if(w.length()<3) return false;
+        boolean v = false;
+        boolean c = false;
+        for(int i=0;i<w.length();i++){
+            char ch = w.charAt(i);
+            if(Character.isLetter(ch)){
+                if(ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u'){
+                    v = true;
                 }else{
-                    con=true;
+                    c = true;
                 }
-            }else if(!Character.isDigit(c)){
+            }else if (!Character.isDigit(ch)) {
                 return false;
             }
         }
-        return v && con;
+        return v && c;
+        
     }
 }
