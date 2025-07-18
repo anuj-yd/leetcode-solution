@@ -25,8 +25,15 @@ class Solution {
         helper(root.left,ans,s);
         helper(root.right,ans,s);
     }
+    // public void helper(TreeNode root,List<String> ans,String sb){
+    //     if(root == null) return;
+    //     sb.append(root.val);
+
+    // }
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> ans = new ArrayList<>();
+        // StringBuiler sb = new StringBuiler();
+        // helper(root,ans,sb);
         helper(root,ans,"");
         return ans;
     }
