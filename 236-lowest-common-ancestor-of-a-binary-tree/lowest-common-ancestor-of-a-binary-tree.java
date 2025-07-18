@@ -20,11 +20,12 @@ class Solution {
             return root;
         }
 
-        if(lf!=null){
-            return lf;
-        }else{
-            return rf;
-        }
+        // if(lf!=null){
+        //     return lf;
+        // }else{
+        //     return rf;
+        // }
+        return lf!=null ? lf : rf;
         
     }
 }
