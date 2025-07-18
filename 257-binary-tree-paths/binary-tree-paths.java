@@ -14,17 +14,6 @@
  * }
  */
 class Solution {
-    // public void helper(TreeNode root,List<String> ans,String s){
-    //     if(root == null) return;
-    //     if(root.left == null && root.right==null){
-    //         s+=root.val;
-    //         ans.add(s);
-    //         return;
-    //     }
-    //     s = s+root.val+"->";
-    //     helper(root.left,ans,s);
-    //     helper(root.right,ans,s);
-    // }
     public void helper(TreeNode root,List<String> ans,StringBuilder sb){
         if(root == null) return;
         int len = sb.length();
@@ -45,7 +34,6 @@ class Solution {
         List<String> ans = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         helper(root,ans,sb);
-        // helper(root,ans,"");
         return ans;
     }
 }
