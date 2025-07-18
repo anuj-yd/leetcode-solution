@@ -14,27 +14,38 @@
  * }
  */
 class Solution {
-    public void helper(TreeNode root,List<String> ans,String s){
-        if(root == null) return;
-        if(root.left == null && root.right==null){
-            s+=root.val;
-            ans.add(s);
-            return;
-        }
-        s = s+root.val+"->";
-        helper(root.left,ans,s);
-        helper(root.right,ans,s);
-    }
-    // public void helper(TreeNode root,List<String> ans,String sb){
+    // public void helper(TreeNode root,List<String> ans,String s){
     //     if(root == null) return;
-    //     sb.append(root.val);
-
+    //     if(root.left == null && root.right==null){
+    //         s+=root.val;
+    //         ans.add(s);
+    //         return;
+    //     }
+    //     s = s+root.val+"->";
+    //     helper(root.left,ans,s);
+    //     helper(root.right,ans,s);
     // }
+    public void helper(TreeNode root,List<String> ans,StringBuilder sb){
+        if(root == null) return;
+        int len = sb.length();
+        if(len!=0){
+            sb.append("->");
+        }
+        sb.append(root.val);
+        if(root.left==null && root.right==null){
+            ans.add(sb.toString());
+        }else{
+            helper(root.left,ans,sb);
+            helper(root.right,ans,sb);
+        }
+        sb.setLength(len);
+          
+    }
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> ans = new ArrayList<>();
-        // StringBuiler sb = new StringBuiler();
-        // helper(root,ans,sb);
-        helper(root,ans,"");
+        StringBuilder sb = new StringBuilder();
+        helper(root,ans,sb);
+        // helper(root,ans,"");
         return ans;
     }
 }
