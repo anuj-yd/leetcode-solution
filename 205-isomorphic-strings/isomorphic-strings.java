@@ -13,12 +13,10 @@ class Solution {
                 if (map.get(sChar) != tChar) {
                     return false;
                 }
-            } else {
-                if (map.containsValue(tChar)) {
-                    return false;
-                }
-                map.put(sChar, tChar);
+            }else if (map.containsValue(tChar)) {
+                return false;
             }
+            map.put(sChar, tChar);
         }
         return true;
     }
