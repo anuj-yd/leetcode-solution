@@ -3,7 +3,7 @@ class Solution {
         HashMap<Integer,Integer> h = new HashMap<>();
         for(int i=0;i<nums.length;i++){
             int n = target-nums[i];
-            if(h.containsKey(n) && h.get(n)!=i){
+            if(h.containsKey(n)){
                 return new int[]{i,h.get(n)};
             }
             h.put(nums[i],i);
