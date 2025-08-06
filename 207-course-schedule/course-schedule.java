@@ -10,7 +10,7 @@ class Solution {
         for(int pre[] : prerequisites){
             int u = pre[0];
             int v = pre[1];
-            adj.get(u).add(v);
+            adj.get(v).add(u);
         }
 
         boolean[] visited = new boolean[V];
