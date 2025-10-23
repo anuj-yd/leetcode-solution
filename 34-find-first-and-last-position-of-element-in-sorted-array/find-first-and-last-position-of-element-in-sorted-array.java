@@ -1,27 +1,29 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int first = findBound(nums, target, true);
-        int last = findBound(nums, target, false);
-        return new int[]{first, last};
-    }
-    private int findBound(int[] nums, int target, boolean isFirst) {
-        int s = 0, l = nums.length - 1;
-        int result = -1;
-        while(s <= l) {
-            int mid = s+(l-s)/2;
-            if(nums[mid] == target) {
-                result = mid;
-                if(isFirst) {
-                    l = mid - 1; 
-                }else{
-                    s = mid + 1; 
+        int s = 0;
+        int e = nums.length-1;
+        int fp = -1;
+        int lp = -1;
+        while(s<=e){
+            int mid = s+(e-s)/2;
+
+            if(nums[mid] == target){
+                fp=lp=mid;
+                while(fp>0 && nums[fp-1]==target){
+                    fp = fp-1;
                 }
-            }else if(nums[mid] < target) {
-                s = mid + 1;
+                while(lp<nums.length-1 && nums[lp+1]==target){
+                    lp = lp+1;
+                }
+                break;
+            }else if(nums[mid]<target){
+                s= mid+1;
             }else{
-                l = mid - 1;
+                e = mid-1;
             }
+
         }
-        return result;
+        return new int[]{fp,lp};
+        
     }
 }
