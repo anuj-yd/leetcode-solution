@@ -1,29 +1,41 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int s = 0;
-        int e = nums.length-1;
-        int fp = -1;
-        int lp = -1;
-        while(s<=e){
-            int mid = s+(e-s)/2;
+        int first = findFirst(nums, target);
+        int last = findLast(nums, target);
+        return new int[]{first, last};
+    }
 
-            if(nums[mid] == target){
-                fp=lp=mid;
-                while(fp>0 && nums[fp-1]==target){
-                    fp = fp-1;
-                }
-                while(lp<nums.length-1 && nums[lp+1]==target){
-                    lp = lp+1;
-                }
-                break;
-            }else if(nums[mid]<target){
-                s= mid+1;
-            }else{
-                e = mid-1;
+    private int findFirst(int[] nums, int target) {
+        int s = 0, e = nums.length - 1;
+        int ans = -1;
+        while (s <= e) {
+            int mid = s + (e - s) / 2;
+            if (nums[mid] == target) {
+                ans = mid;     // potential first
+                e = mid - 1;   // keep searching left side
+            } else if (nums[mid] < target) {
+                s = mid + 1;
+            } else {
+                e = mid - 1;
             }
-
         }
-        return new int[]{fp,lp};
-        
+        return ans;
+    }
+
+    private int findLast(int[] nums, int target) {
+        int s = 0, e = nums.length - 1;
+        int ans = -1;
+        while (s <= e) {
+            int mid = s + (e - s) / 2;
+            if (nums[mid] == target) {
+                ans = mid;     // potential last
+                s = mid + 1;   // keep searching right side
+            } else if (nums[mid] < target) {
+                s = mid + 1;
+            } else {
+                e = mid - 1;
+            }
+        }
+        return ans;
     }
 }
