@@ -1,6 +1,6 @@
 class Solution {
     public long maxMatrixSum(int[][] matrix) {
-        long sum = 0;
+        long sum = 0L;
         int negCount = 0;
         int minAbs = Integer.MAX_VALUE;
 
@@ -15,7 +15,7 @@ class Solution {
 
         // agar negative numbers odd count me hain
         if (negCount % 2 != 0) {
-            sum -= 2L * minAbs;
+            sum -= 2 * minAbs;
         }
 
         return sum;
