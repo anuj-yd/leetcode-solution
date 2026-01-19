@@ -4,7 +4,7 @@ class Solution {
         
         for(int i=0;i<arr.length;i++){
             pq.add(arr[i]);
-            if(pq.size()>k){
+            while(pq.size()>k){
                 pq.poll();
             }
         }
