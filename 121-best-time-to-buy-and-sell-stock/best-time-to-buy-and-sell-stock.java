@@ -5,11 +5,18 @@ class Solution {
         int buy = prices[0];
 
         for(int i = 1;i<prices.length;i++){
-            profit = prices[i]-buy;
-            maxProfit = Math.max(maxProfit,profit);
-            if(prices[i]<buy){
+            if(buy<prices[i]){
+                profit = prices[i]-buy;
+                maxProfit = Math.max(maxProfit,profit);
+
+            }else{
                 buy=prices[i];
+
             }
+            
+            // if(prices[i]<buy){
+            //     buy=prices[i];
+            // }
         }
         return maxProfit;
 
