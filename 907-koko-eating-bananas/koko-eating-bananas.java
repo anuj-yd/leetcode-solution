@@ -1,8 +1,11 @@
 class Solution {
     private long totalBananas(int[] piles,int mid){
         long total = 0;
-        for(int n : piles){
-            total += (long)Math.ceil(n/(double)mid);
+        for(int num : piles){
+            // total += (long)Math.ceil(n/(double)mid);
+            long rem=num%mid;
+            total+=num/mid;
+            if(rem>0) total++;
         }
         return total;
     }
