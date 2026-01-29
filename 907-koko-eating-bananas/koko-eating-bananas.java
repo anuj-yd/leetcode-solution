@@ -1,13 +1,11 @@
 class Solution {
-    private long totalBananas(int[] piles,int mid){
-        long total = 0;
-        for(int num : piles){
-            // total += (long)Math.ceil(n/(double)mid);
-            long rem=num%mid;
-            total+=num/mid;
-            if(rem>0) total++;
+    private boolean minTime(int[] piles,int mid,int h){
+        long time = 0;
+        for(int n : piles){
+            time+= (n+mid-1)/(long)mid;
         }
-        return total;
+        if(time<=h) return true;
+        return false;
     }
     public int minEatingSpeed(int[] piles, int h) {
         int max = Integer.MIN_VALUE;
@@ -19,13 +17,12 @@ class Solution {
         int ans = -1;
         while(low<=high){
             int mid = low+(high-low)/2;
-            long total = totalBananas(piles,mid);
-            if(total<=h){
+            if(minTime(piles,mid,h)){
                 ans = mid;
                 high = mid-1;
             }else{
                 low = mid+1;
-            }   
+            }
         }
         return ans;
         
