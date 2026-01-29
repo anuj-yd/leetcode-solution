@@ -2,8 +2,8 @@ class Solution {
     private boolean minTime(int[] piles,int mid,int h){
         long time = 0;
         for(int n : piles){
-            // time+= (n+mid-1)/(long)mid;
-            time+= (long)Math.ceil(n/(double)mid);
+            time+= (n+mid-1)/(long)mid;
+            // time+= (long)Math.ceil(n/(double)mid);
         }
         if(time<=h) return true;
         return false;
