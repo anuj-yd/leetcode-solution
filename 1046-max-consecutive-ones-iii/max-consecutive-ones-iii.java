@@ -13,10 +13,8 @@ class Solution {
                 if(nums[left]==0) zeros--;
                 left++;
             }
-            if(zeros<=k){
-                
-                maxLen = Math.max(maxLen,right-left+1);
-            }
+            
+            maxLen = Math.max(maxLen,right-left+1);
             right++;
         }
         return maxLen;
