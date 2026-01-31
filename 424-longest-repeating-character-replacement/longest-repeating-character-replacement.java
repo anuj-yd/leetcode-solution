@@ -28,7 +28,7 @@ class Solution {
                 freq[s.charAt(left) - 'A']--;
                 left++;
             }
-            maxLen=Math.max(maxLen,right-left+1);
+            if((right - left + 1) - maxFreq <= k) maxLen=Math.max(maxLen,right-left+1);
             right++;
 
         }
