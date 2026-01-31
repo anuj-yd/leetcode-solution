@@ -9,29 +9,19 @@
  * }
  */
 class Solution {
-    public ListNode reverseList(ListNode head){
-        // Using Recursion (this not optimal tc is O(n) and sc is also O(n))
+    public ListNode reverseList(ListNode head) {
+        if(head==null||head.next==null) return head;
+        ListNode prev = null;
+        ListNode temp = head;
 
-        // if(head==null||head.next == null) return head;
-        // ListNode temp = reverseList(head.next);
-        // head.next.next = head;
-        // head.next = null;
-        // return temp;  
-
-        // Optimal is Itrative or 3 pointer approch O(1)  
-        ListNode curr = head;
-        ListNode temp = null;
-        ListNode prev = null;   
-        while(curr!=null){
-            temp = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = temp;
+        while(temp!=null){
+            ListNode nxt = temp.next;   
+            temp.next = prev;
+            prev = temp;
+            temp = nxt; 
         }
         return prev;
 
-
-
-
+        
     }
 }
