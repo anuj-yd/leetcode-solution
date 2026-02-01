@@ -28,18 +28,19 @@ class Solution {
 
         int low = min;
         int high = max;
-
+        int ans = -1;
         while(low<=high){
             int mid = low+(high-low)/2;
             boolean req = required(mid,bloomDay,m,k);
             if(req){
+                ans = mid;
                 high = mid-1;
             }else{
                 low = mid+1;
             }
             
         }
-        return low;
+        return ans;
         
     }
 }
