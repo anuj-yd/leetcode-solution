@@ -23,15 +23,16 @@ class Solution {
         Set<TreeNode> visited = new HashSet<>();
         q.offer(target);
         visited.add(target);
+
+        List<Integer> ans = new ArrayList<>();
         int dist = 0;
         while(!q.isEmpty()){
             int size = q.size();
             if(dist==k){
-                List<Integer> ans = new ArrayList<>();
                 for(TreeNode node : q){
                     ans.add(node.val);
                 }
-                return ans;
+                break;
             }
 
             for(int i=0;i<size;i++){
@@ -55,6 +56,6 @@ class Solution {
             }
             dist++;
         }
-        return new ArrayList<>();
+        return ans;
     }
 }
