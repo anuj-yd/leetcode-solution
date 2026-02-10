@@ -14,20 +14,41 @@
  * }
  */
 class Solution {
-    public TreeNode helper(int[] inorder, int inlo,int inhi,int[] postorder,int pstlo,int psthi){
-        if(inlo>inhi || pstlo>psthi) return null;
-        TreeNode node = new TreeNode(postorder[psthi]);
-
-        int i = inlo;
-        while(inorder[i]!=postorder[psthi]) i++;
-
-        int leftSize = i-inlo;
-        node.left = helper(inorder, inlo, i-1, postorder, pstlo, pstlo + leftSize - 1);
-        node.right = helper(inorder, i+1, inhi, postorder, pstlo + leftSize, psthi - 1);
-        return node;
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        Map<Integer,Integer> inMap = new HashMap<>();
+        for(int i=0;i<inorder.length;i++){
+            inMap.put(inorder[i],i);
+        }
+        return helper(postorder,0,postorder.length-1,inorder,0,inorder.length-1,inMap);
     }
-    public TreeNode buildTree(int[] inorder, int[] postorder){
-        int n = inorder.length;
-        return helper(inorder,0,n-1,postorder,0,n-1);        
+
+    private TreeNode helper(int[] postorder,int ps,int pe,int[] inorder,int is,int ie,
+    Map<Integer,Integer> inMap ){
+        if(ps>pe||is>ie) return null;
+
+        int rootVal = postorder[pe];
+        TreeNode root = new TreeNode(rootVal);
+
+        int inRoot = inMap.get(root.val);
+        int leftCount = inRoot-is;
+
+        root.left = helper(postorder,
+                           ps,
+                           ps + leftCount - 1,
+                           inorder,
+                           is,
+                           inRoot - 1,
+                           inMap);
+
+        // ✅ RIGHT subtree
+        root.right = helper(postorder,
+                            ps + leftCount,
+                            pe - 1,
+                            inorder,
+                            inRoot + 1,
+                            ie,
+                            inMap);
+
+        return root;
     }
 }
