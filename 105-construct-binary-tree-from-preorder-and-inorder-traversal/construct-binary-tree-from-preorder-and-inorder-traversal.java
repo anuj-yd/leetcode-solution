@@ -14,25 +14,22 @@
  * }
  */
 class Solution {
-
-    public TreeNode helper(int[] preorder, int prelo, int prehi, int[] inorder, int inlo, int inhi) {
-        if (prelo > prehi) return null;
-
-        int rootVal = preorder[prelo];
-        TreeNode root = new TreeNode(rootVal);
-
-        int i = inlo;
-        while (inorder[i] != rootVal) i++;
-        int leftSize = i - inlo;
-
-        root.left = helper(preorder, prelo + 1, prelo + leftSize, inorder, inlo, i - 1);
-        root.right = helper(preorder, prelo + leftSize + 1, prehi, inorder, i + 1, inhi);
-
-        return root;
-    }
-
+    private int preIdx = 0;
+    private Map<Integer,Integer> map = new HashMap<>();
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        int n = preorder.length;
-        return helper(preorder, 0, n - 1, inorder, 0, n - 1);
+        for(int i=0;i<inorder.length;i++){
+            map.put(inorder[i],i);
+        }
+        return helper(preorder,0,inorder.length-1);
+    
+    }
+    private TreeNode helper(int[] preorder,int left,int right){
+        if(left>right) return null;
+        int rootVal = preorder[preIdx++];
+        TreeNode root = new TreeNode(rootVal);
+        int inOrderIdx = map.get(rootVal);
+        root.left = helper(preorder, left, inOrderIdx- 1);
+        root.right = helper(preorder, inOrderIdx + 1, right);
+        return root;
     }
 }
