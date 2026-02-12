@@ -1,50 +1,40 @@
 class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites){
-
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> graph = new ArrayList<>();
+        Queue<Integer> q = new LinkedList<>();
         int V = numCourses;
-        List<List<Integer>> adj = new ArrayList<>();
         for(int i=0;i<V;i++){
-            adj.add(new ArrayList<>());
+            graph.add(new ArrayList<>()); 
+        }
+        int[] indeg = new int[V];
+
+        for(int i=0 ;i<prerequisites.length;i++){
+            int u = prerequisites[i][0];
+            int v = prerequisites[i][1];
+            graph.get(u).add(v);
+            indeg[v]++;
+        }
+        for(int i=0;i<indeg.length;i++){
+            if(indeg[i]==0){
+                q.add(i);
+            }
         }
 
-        for(int pre[] : prerequisites){
-            int u = pre[0];
-            int v = pre[1];
-            adj.get(v).add(u);
-        }
+        int count = 0;
 
-        boolean[] visited = new boolean[V];
-        boolean[] recVisited = new boolean[V];
-
-        for(int i = 0;i<V;i++){
-            if(!visited[i]){
-                if(helper(i,visited,recVisited,adj)){
-                    //  cycle detect krne false isliye return kr rhe h
-                    // kyu agr cycle hui toh toh sare course process hi nhi ho payenge
-                    return false;
+        while(!q.isEmpty()){
+            int rem = q.poll();
+            count++;
+            for(int nbr : graph.get(rem)){
+                indeg[nbr]--;
+                if(indeg[nbr]==0){
+                    q.add(nbr);
                 }
             }
         }
-        return true;
-        
-    }
-
-    public boolean helper(int curr,boolean[] visited,boolean[] recVisited,List<List<Integer>> adj){
-
-        visited[curr] = true;
-        recVisited[curr] = true;
-        
-        for(int nbr : adj.get(curr)){
-            if(!visited[nbr]){
-                if(helper(nbr,visited,recVisited,adj)){
-                    return true;
-                }
-            }else if(recVisited[nbr]){
-                return true;
-            }
-        }
-        recVisited[curr] = false;
+        if(count==V) return true;
         return false;
 
+        
     }
 }
