@@ -1,69 +1,48 @@
 class Solution {
-    static class Edge{
-        int dist;
-        int weight;
+    class Pair{
+        int vtx;
+        int wt;
 
-        Edge(int dist,int weight){
-            this.dist = dist;
-            this.weight = weight;
-        }
-    }
-
-    static class Pair implements Comparable<Pair>{
-
-        int node;
-        int distance;
-
-        Pair(int node,int distance){
-            this.node = node;
-            this.distance = distance;
-        }
-        @Override
-        public int compareTo(Pair p2){
-
-            return this.distance - p2.distance;
+        Pair(int vtx,int wt){
+            this.vtx = vtx;
+            this.wt = wt;
         }
 
     }
     public int networkDelayTime(int[][] times, int n, int k) {
-
-        List<List<Edge>> adj = new ArrayList<>();
-
-        for(int i=0;i<=n;i++) adj.add(new ArrayList<>());
-
-        for(int ed[] : times){
-            int u = ed[0];
-            int v = ed[1];
-            int t = ed[2];
-
-            adj.get(u).add(new Edge(v,t));
+        List<List<Pair>> graph = new ArrayList<>();
+        for(int i=0;i<=n;i++){
+            graph.add(new ArrayList<>());
         }
 
-        int [] dist = new int[n+1];
+        for(int i = 0;i<times.length;i++){
+            int u = times[i][0];
+            int v = times[i][1];
+            int w = times[i][2];
+            graph.get(u).add(new Pair(v,w));
+        }
+        int dist[] = new int[n+1];
         Arrays.fill(dist,Integer.MAX_VALUE);
-        dist[k]=0;
-
-        PriorityQueue<Pair> pq = new PriorityQueue<>();
-        pq.add(new Pair(k,0));
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b)->a.wt-b.wt);
+        dist[k] = 0;
+        pq.offer(new Pair(k,0)); 
 
         while(!pq.isEmpty()){
-            Pair curr = pq.poll();
-            int u = curr.node;
-
-            for(Edge nbr : adj.get(u)){
-                int v = nbr.dist;
-                int weight = nbr.weight;
-
-                if(dist[u]+weight<dist[v]){
-                    dist[v] = dist[u]+weight;
-                    pq.add(new Pair(v,dist[v]));
+            Pair p = pq.poll();
+            int vtx = p.vtx;
+            int wt = p.wt;
+            if(wt > dist[vtx]) continue;
+            for(Pair nbr : graph.get(vtx)){
+                if(wt+nbr.wt<dist[nbr.vtx]){
+                    dist[nbr.vtx] = wt+nbr.wt;
+                    pq.offer(new Pair(nbr.vtx,wt+nbr.wt));
                 }
-            } 
+            }
         }
 
         int max = 0;
-        for (int i = 1; i <= n; i++) {
-            if (dist[i] == Integer.MAX_VALUE) return -1;
+        for(int i = 1; i <=n; i++) {
+            if(dist[i]==Integer.MAX_VALUE) return -1;
             max = Math.max(max, dist[i]);
         }
         return max;
