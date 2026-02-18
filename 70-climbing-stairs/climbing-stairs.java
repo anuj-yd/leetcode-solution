@@ -1,16 +1,15 @@
 class Solution {
-    public int climbStairs(int n) {
-        
-    int[] memo = new int[n + 1];
-        return climb(n, memo);
+    private int finde(int n,int idx,int dp[]){
+        if(idx>n) return 0;
+        if(idx==n) return 1;
+        if(dp[idx]!=-1) return dp[idx];
+        int fs = finde(n,idx+1,dp);
+        int ss = finde(n,idx+2,dp);
+        return dp[idx]=fs+ss;
     }
-
-    private int climb(int n, int[] memo) {
-        if (n == 0 || n == 1) return 1;
-
-        if (memo[n] != 0) return memo[n];  // Already computed
-
-        memo[n] = climb(n - 1, memo) + climb(n - 2, memo);
-        return memo[n];
+    public int climbStairs(int n) {
+        int dp[] = new int[n+1];
+        Arrays.fill(dp,-1);
+        return finde(n,0,dp);
     }
 }
