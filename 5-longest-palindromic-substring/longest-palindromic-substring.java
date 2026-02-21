@@ -1,50 +1,59 @@
 class Solution {
     public String longestPalindrome(String s) {
 
-        if (s == null || s.length() == 0) return "";
+    if (s == null || s.length() == 0) return "";
 
-        String res = "";
-        int max = 0;
+    // 🔹 Step 1: Transform string
+    // Example: "abba" -> "^#a#b#b#a#$"
+    StringBuilder sb = new StringBuilder();
+    sb.append("^");        // start sentinel
 
-        for (int ax = 0; ax < s.length(); ax++) {
+    for (int i = 0; i < s.length(); i++) {
+        sb.append("#");
+        sb.append(s.charAt(i));
+    }
 
-            // ODD length
-            int len = 1;
-            int r = 1;
+    sb.append("#$");       // end sentinel
 
-            while (ax - r >= 0 &&
-                   ax + r < s.length() &&
-                   s.charAt(ax - r) == s.charAt(ax + r)) {
+    String str = sb.toString();
+    int n = str.length();
 
-                len += 2;
-                r++;
-            }
+    int[] P = new int[n];  // palindrome radius array
+    int center = 0;
+    int right = 0;
 
-            if (len > max) {
-                max = len;
-                int start = ax - (len / 2);
-                res = s.substring(start, start + len);
-            }
+    // 🔹 Step 2: Single loop
+    for (int i = 1; i < n - 1; i++) {
 
-            // EVEN length
-            len = 0;
-            r = 1;
+        int mirror = 2 * center - i;
 
-            while (ax - r + 1 >= 0 &&
-                   ax + r  < s.length() &&
-                   s.charAt(ax - r + 1) == s.charAt(ax + r)) {
-
-                len += 2;
-                r++;
-            }
-
-            if (len > max) {
-                max = len;
-                int start = ax - (len / 2) + 1;
-                res = s.substring(start, start + len);
-            }
+        if (i < right) {
+            P[i] = Math.min(right - i, P[mirror]);
         }
 
-        return res;
+        // 🔹 Try expanding
+        while (str.charAt(i + 1 + P[i]) ==
+               str.charAt(i - 1 - P[i])) {
+            P[i]++;
+        }
+
+        // 🔹 Update center and right
+        if (i + P[i] > right) {
+            center = i;
+            right = i + P[i];
+        }
+    }
+    // 🔹 Find max palindrome
+    int maxLen = 0;
+    int centerIndex = 0;
+    for (int i = 1; i < n - 1; i++) {
+        if (P[i] > maxLen) {
+            maxLen = P[i];
+            centerIndex = i;
+        }
+    }
+    // 🔹 Extract original substring
+    int start = (centerIndex - maxLen) / 2;
+    return s.substring(start, start + maxLen);
     }
 }
