@@ -29,8 +29,8 @@ class Solution {
             newNode2.right = currrh;
             return;
         }
-        solve(root.left,val,lvl+1,depth);
-        solve(root.right,val,lvl+1,depth);
+        if(root.left!=null) solve(root.left,val,lvl+1,depth);
+        if(root.right!=null) solve(root.right,val,lvl+1,depth);
     }
     public TreeNode addOneRow(TreeNode root, int val, int depth) {
         if(depth == 1){
