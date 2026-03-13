@@ -34,18 +34,19 @@ class Solution {
         TreeNode curr = root;
 
         while (true) {
-            if (val > curr.val) {
-                if (curr.right == null) {
+            if(curr.val<=val){
+                if(curr.right!=null) curr = curr.right;
+                else{
                     curr.right = new TreeNode(val);
                     break;
                 }
-                curr = curr.right;
-            } else {
-                if (curr.left == null) {
+            }else{
+                if(curr.left!=null) curr = curr.left;
+                else{
                     curr.left = new TreeNode(val);
                     break;
                 }
-                curr = curr.left;
+
             }
         }
 
