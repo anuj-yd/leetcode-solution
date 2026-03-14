@@ -1,41 +1,26 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
+        if(s.length() != t.length()) return false;
+        Map<Character,Integer> map = new HashMap<>();
 
-    //     if (s.length() != t.length()) {
-    //         return false;
-    //     }
+        for(char ch : s.toCharArray()){
 
-    //     // Step 2: Frequency map for s
-    //     HashMap<Character, Integer> mp = new HashMap<>();
+            if(!map.containsKey(ch)){
+                map.put(ch,1);
+            }else{
 
-    //     for (int i = 0; i < s.length(); i++) {
-    //         char ch = s.charAt(i);
-    //         mp.put(ch, mp.getOrDefault(ch, 0) + 1);
-    //     }
+                map.put(ch,map.get(ch)+1);
+            }
+        }
+        for(char ch : t.toCharArray()){
+            if(!map.containsKey(ch)) return false;
+            map.put(ch,map.get(ch)-1);
+            if(map.get(ch)==0) map.remove(ch);
+        }
 
-    //     // Step 3: Reduce frequency for each character in t
-    //     for (int i = 0; i < t.length(); i++) {
-    //         char ch = t.charAt(i);
-    //         if (!mp.containsKey(ch)) {
-    //             return false; // character t me hai par s me nahi
-    //         }
-    //         mp.put(ch, mp.get(ch) - 1);
-    //         if (mp.get(ch) == 0) {
-    //             mp.remove(ch); // unnecessary key remove
-    //         }
-    //     }
+        return map.size() == 0;
 
-    //     return mp.isEmpty();
-    // }
-
-    if(s.length()!=t.length()) return false;
-
-        char[] sa = s.toCharArray();
-        char[] ta = t.toCharArray();
-
-        Arrays.sort(sa);
-        Arrays.sort(ta);
-
-        return Arrays.equals(sa, ta);
+        
+        
     }
 }
