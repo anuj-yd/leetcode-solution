@@ -5,21 +5,19 @@ class Solution {
 
         PriorityQueue<String> pq = new PriorityQueue<>(
             (a, b) -> {
-                if (a.length() != b.length()) {
-                    return b.length() - a.length();   
-                }
-                return b.compareTo(a);               
+                if (a.length() != b.length())
+                    return a.length() - b.length(); // smaller first
+                return a.compareTo(b);
             }
         );
 
         for (String num : nums) {
             pq.offer(num);
+            if (pq.size() > k) {
+                pq.poll();
+            }
         }
 
-        for (int i = 1; i < k; i++) {
-            pq.poll();
-        }
-
-        return pq.poll();
+        return pq.peek();
     }
 }
