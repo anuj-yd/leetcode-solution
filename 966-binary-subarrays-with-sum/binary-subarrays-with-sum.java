@@ -1,22 +1,30 @@
 class Solution {
-    public int numSubarraysWithSum(int[] nums, int k) {
-        int count = 0;
+    public int subSum(int[] nums,int k){
+
         int left = 0;
         int right = 0;
+        int n = nums.length;
         int sum = 0;
-        Map<Integer,Integer> map = new HashMap<>();
-        map.put(0, 1);
-        while(right<nums.length){
-            sum+=nums[right];
+        int count = 0;
 
-            if(map.containsKey(sum-k)){
-                count+=map.get(sum-k);
+        while(right<n){
+
+            sum += nums[right];
+
+            while(left<=right && sum>k){
+                sum -= nums[left];
+                left++;
             }
-            map.put(sum,map.getOrDefault(sum,0)+1);
+            count += (right-left+1);
             right++;
-        
+
         }
         return count;
+    }
+    public int numSubarraysWithSum(int[] nums, int goal) {
+
+
+        return subSum(nums,goal)-subSum(nums,goal-1);
         
     }
 }
