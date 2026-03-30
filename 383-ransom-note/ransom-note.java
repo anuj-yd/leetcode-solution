@@ -1,20 +1,25 @@
-import java.util.Arrays;
-
 class Solution {
     public boolean canConstruct(String ransomNote, String magazine) {
-        char[] ransomArr = ransomNote.toCharArray();
-        char[] magazineArr = magazine.toCharArray();
 
-        Arrays.sort(ransomArr);
-        Arrays.sort(magazineArr);
+        int r = ransomNote.length();
+        int m = magazine.length();
+        if(m<r) return false;
+        int[] freq = new int[26];
 
-        int i = 0, j = 0;
-        while (i < ransomArr.length && j < magazineArr.length) {
-            if (ransomArr[i] == magazineArr[j]) {
-                i++; 
-            }
-            j++;
+        for(int i=0;i<m;i++){
+            char ch = magazine.charAt(i);
+            int idx = ch - 'a';
+            freq[idx]++;
         }
-        return i == ransomArr.length; 
+
+        for(int i=0;i<ransomNote.length();i++){
+            char ch = ransomNote.charAt(i);
+            int idx = ch - 'a';
+            freq[idx]--;
+            if(freq[idx]<0) return false;
+        }
+        
+        return true;
+        
     }
 }
