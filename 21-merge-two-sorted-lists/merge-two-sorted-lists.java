@@ -10,57 +10,37 @@
  */
 class Solution {
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        // WITHOUT USING EXTRA SPACES;
+        ListNode dummy = new ListNode(0);
+        ListNode temp = dummy;
+        ListNode f1 = list1;
+        ListNode f2 = list2;
 
-        ListNode temp1 = list1;
-        ListNode temp2 = list2;
-
-        ListNode h = new ListNode(0);
-        ListNode temp = h;
-
-        while(temp1!=null && temp2!=null){
-            if(temp1.val<temp2.val){
-                temp.next = temp1;
-                temp = temp1;
-                temp1 = temp1.next;
+        while(f1!=null && f2!=null){
+            if(f1.val<f2.val){
+                temp.next = f1;
+                f1 = f1.next;
+            }else if(f1.val>f2.val){
+                temp.next = f2;
+                f2 = f2.next;
             }else{
-                temp.next = temp2;
-                temp = temp2;
-                temp2 = temp2.next;
+                temp.next = f1;
+                f1 = f1.next;
             }
+            temp = temp.next; 
         }
-        if(temp1 == null){
-            temp.next = temp2;
-        }else{
-            temp.next = temp1;
+        while(f1!=null){
+            temp.next = f1;
+            f1 = f1.next;
+            temp = temp.next;
         }
-        return h.next;
+        while(f2!=null){
+            temp.next = f2;
+            f2 = f2.next;
+            temp = temp.next;
+        }
+        return dummy.next;
+        
+
+
     }
-
-
-    //     ListNode temp1 = list1;
-    //     ListNode temp2 = list2;
-
-    //     ListNode head = new ListNode(0); // Dummy node
-    //     ListNode temp = head;
-
-    //     while (temp1 != null && temp2 != null) {
-    //         if (temp1.val < temp2.val) {
-    //             temp.next = new ListNode(temp1.val);
-    //             temp1 = temp1.next;
-    //         } else {
-    //             temp.next = new ListNode(temp2.val);
-    //             temp2 = temp2.next;
-    //         }
-    //         temp = temp.next;
-    //     }
-
-    //     if (temp1 != null) {
-    //         temp.next = temp1;
-    //     } else {
-    //         temp.next = temp2;
-    //     }
-
-    //     return head.next;
-    // }
 }
