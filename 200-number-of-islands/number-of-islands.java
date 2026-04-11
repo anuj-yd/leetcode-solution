@@ -1,43 +1,32 @@
 class Solution {
+    public void dfs(int i, int j, char[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
 
-    private void bfs(char[][] grid, int r, int c, int[][] arr) {
-        Queue<int[]> q = new LinkedList<>();
-        q.offer(new int[]{r, c});
-        grid[r][c] = '0'; 
-
-        while (!q.isEmpty()) {
-            int[] ans = q.poll();
-
-            for (int[] nbr : arr) {
-                int a = ans[0] + nbr[0];
-                int b = ans[1] + nbr[1];
-
-                if (a >= 0 && b >= 0 &&
-                    a < grid.length &&
-                    b < grid[0].length &&
-                    grid[a][b] == '1') {
-
-                    q.offer(new int[]{a, b});
-                    grid[a][b] = '0'; 
-                }
-            }
+        if (i < 0 || j < 0 || i >= n || j >= m || grid[i][j] == '0') {
+            return;
         }
+
+        // mark visited
+        grid[i][j] = '0';
+
+        // explore 4 directions
+        dfs(i + 1, j, grid);
+        dfs(i - 1, j, grid);
+        dfs(i, j + 1, grid);
+        dfs(i, j - 1, grid);
     }
 
     public int numIslands(char[][] grid) {
-        if (grid == null || grid.length == 0) return 0;
-
-        int[][] arr = {
-            {1, 0}, {-1, 0}, {0, 1}, {0, -1}
-        };
-
+        int n = grid.length;
+        int m = grid[0].length;
         int count = 0;
 
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 if (grid[i][j] == '1') {
                     count++;
-                    bfs(grid, i, j, arr);
+                    dfs(i, j, grid);
                 }
             }
         }
