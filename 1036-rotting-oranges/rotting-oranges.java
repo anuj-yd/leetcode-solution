@@ -3,45 +3,50 @@ class Solution {
         int ni;
         int nj;
         public Pair(int ni,int nj){
-            this.ni=ni;
+            this.ni = ni;
             this.nj = nj;
         }
     }
     public int orangesRotting(int[][] grid) {
-        int n = grid.length;
-        int m = grid[0].length;
-
-        Queue<Pair> q = new LinkedList<>();
-        int[][] dir = {{1,0},{0,1},{-1,0},{0,-1}};
+        int row = grid.length;
+        int col = grid[0].length;
         int fresh = 0;
-        for(int i=0;i<n;i++){
-            for(int j = 0;j<m;j++){
-                if(grid[i][j]==2){
-                    q.offer(new Pair(i,j));
-                }else if(grid[i][j]==1){
+        Queue<Pair> q = new LinkedList<>();
+        boolean visited[][] = new boolean[row][col];
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]==1){
                     fresh++;
+                }else if(grid[i][j]==2){
+                    q.offer(new Pair(i,j));
+                    visited[i][j] = true;
                 }
             }
-        } 
+        }
+        int[][] dir = {{0,1},{1,0},{-1,0},{0,-1}};
         int time = 0;
         while(!q.isEmpty() && fresh>0){
             int size = q.size();
 
             for(int i=0;i<size;i++){
                 Pair p = q.poll();
-                for(int[] d : dir){
-                    int ni = d[0]+p.ni;
-                    int nj = d[1]+p.nj;
 
-                    if(ni>=0&&nj>=0&&nj<m&&ni<n&&grid[ni][nj]==1){
-                        grid[ni][nj] = 2;
-                        fresh--;
+                for(int[] d : dir){
+                    int ni = p.ni+d[0];
+                    int nj = p.nj+d[1];
+
+                    if(ni>=0&&nj>=0&&ni<row&&
+                    nj<col&&!visited[ni][nj]&&grid[ni][nj]!=0){
+
                         q.offer(new Pair(ni,nj));
+                        visited[ni][nj]=true;
+                        fresh--;
+
                     }
                 }
             }
             time++;
         }
-        return fresh==0?time:-1;
+        return fresh == 0 ? time : -1;
     }
 }
