@@ -17,7 +17,6 @@ class Solution {
                 i++;
                 j--;
             }
-
         }
     }
     public List<List<Integer>> threeSum(int[] nums) {
