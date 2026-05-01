@@ -1,14 +1,15 @@
 class Solution {
-    public char findTheDifference(String s, String t){
-        // convert the both string to char array
-        char []cs=s.toCharArray();
-        char []ct = t.toCharArray();
-        // sort them to make them in ordered char array
-        Arrays.sort(cs);
-        Arrays.sort(ct);
-        // use mismatch fuction with return the
-        //  index of char that is not matching  
-        int r = Arrays.mismatch(cs,ct);
-        return ct[r];
+    public char findTheDifference(String s, String t) {
+        // char xor = 0; implicit conversion
+        char xor = '\0';
+
+        for(int i=0;i<s.length();i++){
+            xor^=s.charAt(i);
+        }
+        for(int i=0;i<t.length();i++){
+            xor^=t.charAt(i);
+        }
+        return xor;
+        
     }
 }
