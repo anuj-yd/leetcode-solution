@@ -1,0 +1,67 @@
+name: Auto-Organize LeetCode Solutions
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  organize:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Run solution organizer
+        run: |
+          python organize_solutions.py .
+          echo "✅ Solutions organized successfully!"
+
+      - name: Check for changes
+        id: check
+        run: |
+          if git diff --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.check.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Actions"
+          git add Solutions/
+          git add organize_solutions.py
+          git commit -m "[skip ci] Auto-organize solutions" || true
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "### 📊 Solution Organization Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f Solutions/INDEX.json ]; then
+            echo "✅ Solutions have been automatically organized and indexed" >> $GITHUB_STEP_SUMMARY
+            python3 << 'EOF'
+          import json
+          with open('Solutions/INDEX.json') as f:
+              data = json.load(f)
+          print(f"📁 **Topics**: {len(data['topics'])}")
+          print(f"📚 **Total Problems**: {len(data['problems'])}")
+          for topic, problems in sorted(data['topics'].items()):
+              print(f"  • {topic}: {len(problems)}")
+          EOF
+          fi
