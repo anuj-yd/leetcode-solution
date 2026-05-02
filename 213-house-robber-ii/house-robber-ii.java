@@ -1,27 +1,25 @@
 class Solution {
-    private int dfs(int[] nums,int idx,int end,int[] dp){
-        if(idx>end) return 0;
-        if(dp[idx]!=-1) return dp[idx];
-        int la = nums[idx]+dfs(nums,idx+2,end,dp);
-        int ra = dfs(nums,idx+1,end,dp);
+    public int solve(int[] arr,int idx,int n,int[] dp){
 
-        return dp[idx] = Math.max(la,ra);
+        if(idx>n) return 0;
+        if(dp[idx]!=-1) return dp[idx];
+
+        int pick = arr[idx]+solve(arr,idx+2,n,dp);
+        int skip = solve(arr,idx+1,n,dp);
+
+        return dp[idx] = Math.max(pick,skip); 
+        
 
     }
     public int rob(int[] nums) {
         int n = nums.length;
-        if(n==1) return nums[0];
-        //exclude last;
-        int dp1[] = new int[nums.length];
+        if (n == 1) return nums[0];
+        int[] dp1 = new int[n];
         Arrays.fill(dp1,-1);
-        int case1 = dfs(nums,0,n-2,dp1);
-
-        //exclude first;
-        int dp2[] = new int[nums.length];
+        int sum1 = solve(nums,0,n-2,dp1);
+        int[] dp2 = new int[n];
         Arrays.fill(dp2,-1);
-        int case2 = dfs(nums,1,n-1,dp2);
-        return Math.max(case1,case2);
-
-        
+        int sum2 = solve(nums,1,n-1,dp2);
+        return Math.max(sum1,sum2);
     }
 }
