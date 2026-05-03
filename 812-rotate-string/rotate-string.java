@@ -9,12 +9,12 @@ class Solution {
 
             if(right-left+1<k){
                 right++;
-                continue;
             }else if(right-left+1==k){
-
-
-                String str = s.substring(left,right+1);
-                if(str.equals(goal)) return true;
+                int i = 0;
+                while(i<k && s.charAt(left+i)==goal.charAt(i)){
+                    i++;
+                }
+                if(i==k) return true;
                 left++;
                 right++;
             }
