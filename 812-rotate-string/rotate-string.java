@@ -11,6 +11,8 @@ class Solution {
                 right++;
                 continue;
             }else if(right-left+1==k){
+
+
                 String str = s.substring(left,right+1);
                 if(str.equals(goal)) return true;
                 left++;
