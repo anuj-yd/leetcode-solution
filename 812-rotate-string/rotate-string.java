@@ -2,7 +2,6 @@ class Solution {
     public boolean rotateString(String s, String goal) {
         if(s.length()!=goal.length()) return false;
         s = s+s;
-        System.out.println(s);
         int left = 0;
         int right = 0;
         int k = goal.length();
