@@ -8,7 +8,7 @@ class Solution {
             if(num >= 0) q.addLast(num);
         }
         if(q.size()==0) return nums;
-
+        k = k%q.size();
         while(k!=0){
             q.addLast(q.pollFirst());
             k--;
