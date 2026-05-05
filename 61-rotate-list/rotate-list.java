@@ -10,31 +10,32 @@
  */
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
-        if (head == null || head.next == null || k == 0) return head;
-
-        // Step 1: find length and tail
-        int len = 1;
-        ListNode tail = head;
-        while (tail.next != null) {
+        if(head==null) return head;
+        int len = 0;
+        ListNode temp = head;
+        while(temp!=null){
+            temp = temp.next;
             len++;
+        }
+
+        k = k%len;
+        if(k == 0) return head;
+
+        ListNode tail = head;
+        while(tail.next != null){
             tail = tail.next;
         }
 
-        // Step 2: make it circular
+        int stps = len-k;
+        ListNode curr = head;
+        for(int i=1;i<stps;i++){
+            curr = curr.next;
+        }
+        ListNode newhead = curr.next;
+        curr.next = null;
         tail.next = head;
 
-        // Step 3: find new head (len - k % len - 1 steps from head)
-        k = k % len;
-        int stepsToNewHead = len - k;
-        ListNode newTail = head;
-        for (int i = 1; i < stepsToNewHead; i++) {
-            newTail = newTail.next;
-        }
-
-        // Step 4: break the circle
-        ListNode newHead = newTail.next;
-        newTail.next = null;
-
-        return newHead;
+        return newhead;
+        
     }
 }
