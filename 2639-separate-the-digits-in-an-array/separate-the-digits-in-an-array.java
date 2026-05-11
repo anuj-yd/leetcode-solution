@@ -2,11 +2,12 @@ class Solution {
     public int[] separateDigits(int[] nums) {
         List<Integer> ans = new ArrayList<>();
 
-        for(int i=nums.length-1;i>=0;i--){
-            while(nums[i]!=0){
-                int d = nums[i]%10;
-                ans.add(0,d);
-                nums[i] = nums[i]/10;
+        for(int num : nums){
+            int idx = ans.size();
+            while(num!=0){
+                int d = num%10;
+                ans.add(idx,d);
+                num = num/10;
             }
         }
         int res[] = new int[ans.size()];
