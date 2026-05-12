@@ -35,12 +35,14 @@ class Solution {
         ListNode temp1 = head;
 
         while(temp!=null){
-            if(temp.val!=temp1.val) return false;
+            if(temp.val!=temp1.val){
+                reverse(newNode);
+                return false;
+            }
             temp = temp.next;
             temp1 = temp1.next;
         }
-        ListNode org = reverse(slow);
-        slow.next = org;
+        reverse(newNode);
         return true;
 
         
