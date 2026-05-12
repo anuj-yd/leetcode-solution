@@ -39,6 +39,8 @@ class Solution {
             temp = temp.next;
             temp1 = temp1.next;
         }
+        ListNode org = reverse(slow);
+        slow.next = org;
         return true;
 
         
