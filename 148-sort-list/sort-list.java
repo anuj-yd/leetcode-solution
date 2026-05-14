@@ -10,19 +10,21 @@
  */
 class Solution {
     public ListNode sortList(ListNode head) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a,b)->a.val-b.val);
+        // pq.add(head);
         ListNode temp = head;
         while(temp!=null){
-            pq.add(temp.val);
+            pq.add(temp);
             temp = temp.next;
         }
         ListNode dummy = new ListNode(0);
         ListNode dm = dummy;
         while(!pq.isEmpty()){
-            int data = pq.poll();
-            dm.next = new ListNode(data);
+            ListNode node = pq.poll();
+            dm.next = node;
             dm = dm.next;
         }
+        dm.next = null;
         return dummy.next;
     }
 }
