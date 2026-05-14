@@ -1,19 +1,19 @@
 class Solution {
     public boolean isGood(int[] nums) {
-        int size = nums.length;
-        int n=size-1;
-        int freq[] = new int[n+1];
+        int max = Integer.MIN_VALUE;
         for(int num : nums){
-            if(num>n) return false;
+            max = Math.max(num,max);
+        }
+        int[] freq = new int[max+1];
+        for(int num : nums){
             freq[num]++;
         }
-        for(int i = 1;i<=n-1;i++){
-            if(freq[i]!=1){
-                return false;
-            }
+
+        for(int i=1;i<=max-1;i++){
+            if(freq[i]!=1) return false;
+
         }
-        if(freq[n]==2) return true;
+        if(freq[max]==2) return true;
         return false;
-        
     }
 }
