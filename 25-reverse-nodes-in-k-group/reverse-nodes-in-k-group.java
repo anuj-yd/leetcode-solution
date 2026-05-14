@@ -10,7 +10,7 @@
  */
 class Solution {
     public ListNode reverse(ListNode head){
-        ListNode temp = head;
+        ListNode temp =head;
         ListNode prev = null;
 
         while(temp!=null){
@@ -28,8 +28,7 @@ class Solution {
         ListNode end = head;
         while(end!=null){
             for(int i=0;i<k-1;i++){
-
-                if(end == null || end.next == null){
+                if(end==null|| end.next==null){
                     dm.next = start;
                     return dummy.next;
                 }
@@ -42,6 +41,6 @@ class Solution {
             start = temp;
             end = temp;
         }
-        return dummy.next; 
+        return dummy.next;
     }
 }
