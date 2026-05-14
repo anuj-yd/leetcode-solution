@@ -9,31 +9,21 @@
  * }
  */
 class Solution {
-    static class Pair{
-        int data;
-        ListNode node;
-        Pair(int data,ListNode node){
-            this.data=data;
-            this.node=node;
-        }
-    }
     public ListNode mergeKLists(ListNode[] lists) {
         int n = lists.length; 
         if(n == 0) return null;
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b)->a.data-b.data);
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a,b)->a.val-b.val);
         for(int i=0;i<n;i++){
-            if(lists[i]!=null) pq.add(new Pair(lists[i].val,lists[i]));
+            if(lists[i]!=null) pq.add(lists[i]);
         }
         ListNode dummy = new ListNode(0);
         ListNode temp = dummy;
 
         while(!pq.isEmpty()){
-            Pair p = pq.poll();
-            ListNode node = p.node;
+            ListNode node = pq.poll();
             temp.next = node;
             if(node.next!=null){
-                int d = node.next.val;
-                pq.offer(new Pair(d,node.next));
+                pq.offer(node.next);
             }
             temp = temp.next;
         }
