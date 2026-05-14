@@ -9,45 +9,36 @@
  * }
  */
 class Solution {
-    public ListNode merge(ListNode l1,ListNode l2){
-        if(l1 == null) return l2;
-        if(l2 == null) return l1;
-
-        ListNode dummy = new ListNode(0);
-        ListNode dm = dummy;
-
-        ListNode t1 = l1;
-        ListNode t2 = l2;
-
-        while(t1!=null && t2!=null){
-            if(t1.val<=t2.val){
-                dm.next = t1;
-                t1 = t1.next;
-            }else{
-                dm.next = t2;
-                t2=t2.next;
-            }
-            dm = dm.next;
+    static class Pair{
+        int data;
+        ListNode node;
+        Pair(int data,ListNode node){
+            this.data=data;
+            this.node=node;
         }
-        if(t1!=null) dm.next = t1;
-        if(t2!=null) dm.next = t2;
-        return dummy.next;
     }
     public ListNode mergeKLists(ListNode[] lists) {
-        int n = lists.length;
-
+        int n = lists.length; 
         if(n == 0) return null;
-        while(n > 1){
-            int idx = 0;
-            for(int i = 0; i < n; i += 2){
-                ListNode h1 = lists[i];
-                ListNode h2 = (i + 1 < n) ? lists[i + 1] : null;
-                lists[idx] = merge(h1, h2);
-                idx++;
-            }
-            n = idx;
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b)->a.data-b.data);
+        for(int i=0;i<n;i++){
+            if(lists[i]!=null) pq.add(new Pair(lists[i].val,lists[i]));
         }
-        return lists[0];
+        ListNode dummy = new ListNode(0);
+        ListNode temp = dummy;
+
+        while(!pq.isEmpty()){
+            Pair p = pq.poll();
+            ListNode node = p.node;
+            temp.next = node;
+            if(node.next!=null){
+                int d = node.next.val;
+                pq.offer(new Pair(d,node.next));
+            }
+            temp = temp.next;
+        }
+        return dummy.next;
+
         
     }
 }
