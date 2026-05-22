@@ -1,7 +1,6 @@
 class Solution {
     public void solve(int[] nums,int idx,List<List<Integer>> ans,List<Integer> path){
         int n = nums.length;
-        Arrays.sort(nums);
         if(idx>=n){
             ans.add(new ArrayList<>(path));
             return;
@@ -18,6 +17,7 @@ class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
         List<Integer> path = new ArrayList<>();
+        Arrays.sort(nums);
         solve(nums,0,ans,path);
         return ans;
         
