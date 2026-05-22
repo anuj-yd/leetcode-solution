@@ -1,25 +1,22 @@
 class Solution {
-    public List<List<Integer>> subsets(int[] nums) {
+    public void solve(int[] nums,int idx,List<List<Integer>> ans,List<Integer> path){
         int n = nums.length;
-        // int subset = 1<<n;
-        List<List<Integer>> ans = new ArrayList<>();
-        ans.add(new ArrayList<>());
-        // for(int num = 0;num<subset-1;num++){
-        //     List<Integer> ls = new ArrayList<>();
-        //     for(int i=0;i<n;i++){
-        //         if((num&(1<<i))==0) ls.add(nums[i]);
-        //     }
-        //     ans.add(ls);
-        // }
-        for(int i = 0; i < nums.length; i++) {
-            int size = ans.size(); 
-
-            for (int j = 0; j < size; j++) {
-                List<Integer> ls = new ArrayList<>(ans.get(j));
-                ls.add(nums[i]);
-                ans.add(ls);
-            }
+        if(idx>=n){
+            ans.add(new ArrayList<>(path));
+            return;
         }
-        return ans;
+        //pick
+        path.add(nums[idx]);
+        solve(nums,idx+1,ans,path);
+
+        //skip
+        path.remove(path.size()-1);
+        solve(nums,idx+1,ans,path);
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        solve(nums,0,ans,path);
+        return ans;  
     }
 }
