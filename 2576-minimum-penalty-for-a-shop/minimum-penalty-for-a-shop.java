@@ -1,27 +1,28 @@
 class Solution {
     public int bestClosingTime(String customers) {
-        int sum = 0;
-        for (char c : customers.toCharArray()) {
-            if (c == 'Y') sum++;
+        int n = customers.length();
+        int totsum =0;
+        for(int i=0;i<n;i++){
+            if(customers.charAt(i)=='Y'){
+                totsum++;
+            }
         }
-        int psum = sum;
-        int bsthr = 0;
-        for(int i=0;i<customers.length();i++){
-            char ch = customers.charAt(i);
-            if(ch == 'Y'){
+        int sum = totsum;
+        int penalty = 0;
+        for(int i=0;i<n;i++){
+            if(customers.charAt(i)=='N'){
                 sum--;
-            }else if(ch=='N'){
+            }else if(customers.charAt(i)=='Y'){
                 sum++;
-                
             }
-            if(sum<psum){
-                psum = sum;
-                bsthr = i+1;
+
+            if(totsum<sum){
+                sum = totsum;
+                penalty = i+1;
             }
         }
-        
-        return bsthr;
 
+        return penalty;
         
     }
 }
