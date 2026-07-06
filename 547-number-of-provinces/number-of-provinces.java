@@ -1,12 +1,20 @@
 class Solution {
-    public void dfs(int node,boolean[] vis,List<List<Integer>> adj){
-        vis[node] = true;
+    public void bfs(int node,boolean[] vis,List<List<Integer>> adj){
+       
+       vis[node] = true;
+       Queue<Integer> q = new LinkedList<>();
 
-        for(int nbr : adj.get(node)){
-            if(!vis[nbr]){
-                dfs(nbr,vis,adj);
+       q.offer(node);
+       while(!q.isEmpty()){
+
+            int curr = q.poll();
+            for(int nbr : adj.get(curr)){
+                if(!vis[nbr]){
+                    q.offer(nbr);
+                    vis[nbr] = true;
+                }
             }
-        }
+       }
     }
     public int findCircleNum(int[][] isConnected) {
 
@@ -27,7 +35,7 @@ class Solution {
 
         for(int i=0;i<isConnected.length;i++){
             if(!vis[i]){
-                dfs(i,vis,adj);
+                bfs(i,vis,adj);
                 count++;
             }
         }
