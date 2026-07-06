@@ -1,41 +1,46 @@
 class Solution {
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-        List<List<Integer>> graph = new ArrayList<>();
-        Queue<Integer> q = new LinkedList<>();
-        int V = numCourses;
-        for(int i=0;i<V;i++){
-            graph.add(new ArrayList<>()); 
-        }
-        int[] indeg = new int[V];
-
-        for(int i=0 ;i<prerequisites.length;i++){
-            int u = prerequisites[i][0];
-            int v = prerequisites[i][1];
-            graph.get(v).add(u);
-            indeg[u]++;
-        }
-        for(int i=0;i<indeg.length;i++){
-            if(indeg[i]==0){
-                q.add(i);
-            }
-        }
-
-        int count = 0;
-        int ans[] = new int[V];
-        int idx=0;
-        while(!q.isEmpty()){
-            int rem = q.poll();
-            ans[idx++]=rem;
-            count++;
-            for(int nbr : graph.get(rem)){
-                indeg[nbr]--;
-                if(indeg[nbr]==0){
-                    q.add(nbr);
-                }
-            }
-        }
-        if (idx < V) return new int[0];
-        return ans;
+    public boolean dfs(int node,boolean[] vis,boolean[] pvis,List<List<Integer>> adj,Stack<Integer> st){
+        vis[node] = true;
+        pvis[node] = true;
         
+        for(int nbr : adj.get(node)){
+            if(!vis[nbr]){
+                if(dfs(nbr,vis,pvis,adj,st)) return true;
+            }else if(pvis[nbr]){
+                return true;
+            }
+        }
+        pvis[node] = false;
+        st.push(node);
+        return false;
+    }
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int ans[] = new int[numCourses];
+
+        List<List<Integer>> adj = new ArrayList<>();
+
+        for(int i=0;i<numCourses;i++) adj.add(new ArrayList<>());
+
+        for(int ed[] : prerequisites){
+            int u = ed[0];
+            int v = ed[1];
+
+            adj.get(v).add(u);
+        }        
+
+        Stack<Integer> st = new Stack<>();
+        boolean[] vis = new boolean[numCourses];
+        boolean[] pvis = new boolean[numCourses];
+
+        for(int i=0;i<numCourses;i++){
+            if(!vis[i] && dfs(i,vis,pvis,adj,st)){
+                return new int[0];
+            }
+        }
+        int idx = 0;
+        while(!st.isEmpty()){
+            ans[idx++] = st.pop();
+        }
+        return ans;
     }
 }
