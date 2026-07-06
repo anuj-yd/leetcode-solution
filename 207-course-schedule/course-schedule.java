@@ -1,4 +1,19 @@
 class Solution {
+    public boolean hasCycle(int node,boolean vis[],boolean pvis[],List<List<Integer>> adj){
+
+        vis[node] = true;
+        pvis[node] = true;
+
+        for(int nbr : adj.get(node)){
+            if(!vis[nbr]){
+                if(hasCycle(nbr,vis,pvis,adj)) return true;
+            }else if(pvis[nbr]){
+                return true;
+            }
+        }
+        pvis[node] = false;
+        return false;
+    }
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         
         List<List<Integer>> adj = new ArrayList<>();
@@ -11,36 +26,16 @@ class Solution {
 
             adj.get(v).add(u);
         }
-
-        int indeg[] = new int[numCourses];
-        
+        boolean vis[] = new boolean[numCourses];
+        boolean pvis[] = new boolean[numCourses];
 
         for(int i=0;i<numCourses;i++){
-            for(int nbr : adj.get(i)){
-                indeg[nbr]++;
-            }
-        }
-        Queue<Integer> q = new LinkedList<>();
-        
-        for(int i=0;i<numCourses;i++){
-            if(indeg[i]==0){
-                q.offer(i);
-            }
-        }
-        int count = 0;
-        while(!q.isEmpty()){
-            int node = q.poll();
-            count++;
-            
-            for(int nbr : adj.get(node)){
-                indeg[nbr]--;
 
-                if(indeg[nbr]==0){
-                    q.offer(nbr);
-                }    
-            }
+            if(!vis[i] && hasCycle(i,vis,pvis,adj)) return false;
         }
-        return count == numCourses;
+
+        return true;
+
 
     }
 }
