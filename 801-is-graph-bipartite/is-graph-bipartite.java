@@ -1,24 +1,22 @@
 class Solution {
-    public boolean isBipartite(int[][] graph) {
-        int n = graph.length;
-        int[] color = new int[n];
-        Arrays.fill(color, -1);
-        for(int i=0;i<n;i++){
-            if(color[i]!=-1) continue;
-            Queue<Integer> q = new LinkedList<>();
-            q.offer(i);
-            color[i] = 0;
+    public boolean dfs(int node,int[] colors,int cc,int[][] graph){
+        colors[node] = cc;
 
-            while(!q.isEmpty()){
-                int node = q.poll();
-                for(int nbr : graph[node]){
-                    if(color[nbr]==-1){
-                        color[nbr] = 1-color[node];
-                        q.offer(nbr);
-                    }else if(color[nbr]==color[node]){
-                        return false;
-                    }
-                }
+        for(int nbr : graph[node]){
+            if(colors[nbr]==colors[node]){
+                return false;
+            }else if(colors[nbr]==-1){
+                if(!dfs(nbr,colors,1-colors[node],graph)) return false;
+            }
+        }
+        return true;
+    }
+    public boolean isBipartite(int[][] graph) {
+        int[] colors = new int[graph.length];
+        Arrays.fill(colors,-1);
+        for(int i = 0;i<graph.length;i++){
+            if(colors[i]==-1){
+                if(!dfs(i,colors,0,graph)) return false;
             }
         }
         return true;
