@@ -1,60 +1,51 @@
 class Solution {
+    class DSU{
+        int prnt[];
+        int rnk[];
+        DSU(int v){
+            prnt = new int[v];
+            rnk = new int[v];
 
-    class DSU {
-        int[] prnt;
-        int[] size;
-
-        public DSU(int n) {
-            prnt = new int[n];
-            size = new int[n];
-
-            for (int i = 0; i < n; i++) {
+            for(int i=0;i<v;i++){
                 prnt[i] = i;
-                size[i] = 1;
             }
         }
 
-        public int find(int x) {
-            if (prnt[x] != x) {
-                prnt[x] = find(prnt[x]);
-            }
-            return prnt[x];
+        public int find(int x){
+            if(prnt[x] == x) return x;
+
+            return prnt[x] = find(prnt[x]);
         }
 
-        public boolean union(int x, int y) {
+        public void union(int x,int y){
             int px = find(x);
             int py = find(y);
 
-            if (px == py) return false;
+            if(px == py) return;
 
-            if (size[px] < size[py]) {
-                prnt[px] = py;
-                size[py] += size[px];
-            } else {
+            if(rnk[px]>rnk[py]){
                 prnt[py] = px;
-                size[px] += size[py];
+            }else if(rnk[py]>rnk[px]){
+                prnt[px] = py;
+            }else{
+                prnt[px] = py;
+                rnk[py]++;
             }
-
-            return true;
         }
     }
-
     public int[] findRedundantConnection(int[][] edges) {
+        
+        DSU d = new DSU(edges.length+1);
 
-        int n = edges.length;
-
-        DSU d = new DSU(n + 1);
-
-        for (int[] ed : edges) {
-
+        for(int ed[] : edges){
             int u = ed[0];
             int v = ed[1];
 
-            if (!d.union(u, v)) {
-                return ed;
+            if(d.find(u)==d.find(v)){
+                return new int[]{u,v};
             }
+            d.union(u,v);
         }
-
-        return new int[0];
+        return new int[2];
     }
 }
