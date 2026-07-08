@@ -1,55 +1,66 @@
 class Solution {
     class DSU{
         int prnt[];
-        int size[];
+        int rnk[];
 
-        public DSU(int n){
-            prnt = new int[n];
-            size = new int[n];
+        DSU(int v){
+            prnt = new int[v];
+            rnk = new int[v];
 
-            for(int i=0;i<n;i++){
+            for(int i=0;i<v;i++){
                 prnt[i] = i;
-                size[i] = 1;
             }
         }
 
         public int find(int x){
-            if(prnt[x] != x){
-                prnt[x] = find(prnt[x]);
-            }
-            return prnt[x];
+            if(prnt[x] == x) return x;
+
+            return prnt[x] = find(prnt[x]);
         }
 
-        public boolean union(int x,int y){
+        public void union(int x,int y){
             int px = find(x);
             int py = find(y);
 
-            if(px==py) return false;
+            if(px==py) return;
 
-            if(size[px]<size[py]){
+            if(rnk[px]>rnk[py]){
+                prnt[py] = px;
+            }else if(rnk[py]>rnk[px]){
                 prnt[px] = py;
-                size[py]+=size[px];
-            }else if(size[py]<size[px]){
-                prnt[py] = px;
-                size[px]+=size[py];
             }else{
-                prnt[py] = px;
-                size[px] += size[py];
+                prnt[px] = py;
+                rnk[py]++;
             }
-            return true;
         }
     }
-
     public int makeConnected(int n, int[][] connections) {
         if(connections.length < n - 1) return -1;
         DSU d = new DSU(n);
-        int count = n;
-        for(int[] ed : connections){
-            int u = ed[0];
-            int v = ed[1];
+        int count = 0;
 
-            if(d.union(u,v)) count--;
+        for(int connect[] : connections){
+            int u = connect[0];
+            int v = connect[1];
+
+            if(u<v){
+                if(d.find(u)==d.find(v)){
+                    count++;
+                }
+                d.union(u,v);
+            }
         }
-        return count-1;
+
+        int comp = 0;
+
+        for(int i=0;i<n;i++){
+            if(d.find(i)==i){
+                comp++;
+            }
+        }
+        int need = comp-1;
+
+        return count>=need ? need : -1;
+        
     }
 }
