@@ -46,6 +46,6 @@ class Solution {
             }
             d.union(u,v);
         }
-        return new int[2];
+        return new int[0];
     }
 }
