@@ -37,30 +37,20 @@ class Solution {
     public int makeConnected(int n, int[][] connections) {
         if(connections.length < n - 1) return -1;
         DSU d = new DSU(n);
-        int count = 0;
+        int comp = n;
 
         for(int connect[] : connections){
             int u = connect[0];
             int v = connect[1];
 
-            if(u<v){
-                if(d.find(u)==d.find(v)){
-                    count++;
-                }
+            if(d.find(u)!=d.find(v)){
                 d.union(u,v);
+                comp--;
             }
         }
+        return comp-1;
 
-        int comp = 0;
-
-        for(int i=0;i<n;i++){
-            if(d.find(i)==i){
-                comp++;
-            }
-        }
-        int need = comp-1;
-
-        return count>=need ? need : -1;
+        
         
     }
 }
