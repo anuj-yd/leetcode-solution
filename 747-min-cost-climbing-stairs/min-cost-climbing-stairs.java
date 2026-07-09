@@ -3,8 +3,11 @@ class Solution {
         if(idx>=arr.length) return 0;
         if(dp[idx]!=-1) return dp[idx];
 
-        dp[idx] = arr[idx]+Math.min(solve1(idx+1,arr,dp),solve1(idx+2,arr,dp));
+        int j1 = solve1(idx+1,arr,dp);
+        int j2 = solve1(idx+2,arr,dp);
 
+        dp[idx] = arr[idx]+Math.min(j1,j2);
+        
         return dp[idx];
     }
 
