@@ -3,12 +3,9 @@ class Solution {
         int[] dat = new int[1001];
 
         for(int[] arr : trips){
-            int ps = arr[0];
-            int s = arr[1];
-            int e = arr[2];
-
-            dat[s] += ps;
-            dat[e] -= ps;
+            
+            dat[arr[1]] += arr[0];
+            dat[arr[2]] -= arr[0];
         }
         int prefix = 0;
         for(int i=0;i<dat.length;i++){
