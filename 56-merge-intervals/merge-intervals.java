@@ -1,31 +1,27 @@
 class Solution {
     public int[][] merge(int[][] intervals) {
         Arrays.sort(intervals,(a,b)->a[0]-b[0]);
-        List<List<Integer>> ans = new ArrayList<>();
-        for(int i=0;i<intervals.length;i++){
-            int start = intervals[i][0];
-            int end = intervals[i][1];
-
-            for(int j=i+1;j<intervals.length;j++){
-                if(intervals[j][0]<=end){
-                    end = Math.max(end,intervals[j][1]);
-                    i=j;
-                }else{
-                    break;
-                }
+        List<int[]> ls = new ArrayList<>();
+        int si = intervals[0][0];
+        int ei = intervals[0][1];
+        int idx = 1;
+        while(idx<intervals.length){
+            if(intervals[idx][0]<=ei){
+                ei = Math.max(ei,intervals[idx][1]);
+            }else{
+                ls.add(new int[]{si,ei});
+                si = intervals[idx][0];
+                ei = intervals[idx][1];
             }
-            ans.add(Arrays.asList(start,end));
+            idx++;
         }
+        ls.add(new int[]{si,ei});
+        int ans[][] = new int[ls.size()][2];
 
-        int[][] arr = new int[ans.size()][2];
-
-        for(int i=0;i<ans.size();i++){
-            arr[i][0] = ans.get(i).get(0);
-            arr[i][1] = ans.get(i).get(1);
-        }
-        return arr;
-
-
-        
+        for(int i=0;i<ls.size();i++){
+            ans[i][0] = ls.get(i)[0];
+            ans[i][1] = ls.get(i)[1];
+        }        
+        return ans;
     }
 }
