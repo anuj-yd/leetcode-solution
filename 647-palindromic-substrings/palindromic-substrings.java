@@ -1,24 +1,37 @@
 class Solution {
-    public boolean isPalin(String s,int i,int j,Boolean[][] dp){
-        if(i>=j) return true;
-
-        if(dp[i][j]!=null) return dp[i][j];
-
-        if(s.charAt(i)==s.charAt(j)){
-            return dp[i][j] = isPalin(s,i+1,j-1,dp);
-        }
-        
-        return dp[i][j] = false;
-    }
     public int countSubstrings(String s) {
-        int n = s.length();
-        Boolean[][] dp = new Boolean[1001][1001];
+        boolean dp[][] = new boolean[1001][1001];
         int count = 0;
-        for(int i=0;i<n;i++){
-            for(int j=i;j<n;j++){
-                if(isPalin(s,i,j,dp)) count++;
+        int n = s.length();
+        // length of substrigs
+        for(int l=1;l<=n;l++){
+        
+            for(int i=0;i+l-1<n;i++){
+
+                int j = i+l-1;
+
+                // l1
+                if(i==j){
+                    dp[i][j] = true;
+                }
+
+                //l2
+                else if(i+1==j){
+                    dp[i][j] = s.charAt(i)==s.charAt(j);
+                }
+                // l>=3
+                else{
+                    dp[i][j] = (s.charAt(i)==s.charAt(j)) && (dp[i+1][j-1]);
+                }
+
+                // check palindrome
+
+                if(dp[i][j]==true) count++;
+
             }
         }
         return count;
+
+        
     }
 }
