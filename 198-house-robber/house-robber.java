@@ -1,17 +1,18 @@
 class Solution {
-    public int rob(int[] nums) {
-        int dp[] = new int[nums.length];
-        Arrays.fill(dp,-1);
-        return dfs(nums,nums.length-1,dp);
-        
-    }
-    private int dfs(int[] nums,int idx,int[] dp){
-        if(idx<0) return 0;
-        if(idx==0) return dp[idx]=nums[0];
 
-        if(dp[idx]!=-1) return dp[idx];
-        int la = nums[idx]+dfs(nums,idx-2,dp);
-        int ra = 0+dfs(nums,idx-1,dp);
-        return dp[idx] = Math.max(la,ra);
+    public int solve(int[] nums,int i,int[] dp){
+        if(i>=nums.length) return 0;
+
+        if(dp[i]!=-1) return dp[i];
+
+        return dp[i] = Math.max(solve(nums,i+1,dp),nums[i]+solve(nums,i+2,dp));
+    }
+    public int rob(int[] nums) {
+        int[] dp = new int[101];
+
+        Arrays.fill(dp,-1);
+
+        return solve(nums,0,dp);
+        
     }
 }
