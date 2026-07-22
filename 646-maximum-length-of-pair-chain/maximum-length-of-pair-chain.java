@@ -29,10 +29,10 @@ class Solution {
 
     public int findLongestChain(int[][] pairs) {
 
-        Arrays.sort(pairs, (a, b) -> a[1]-b[1]);
+        Arrays.sort(pairs, (a, b) -> a[0]-b[0]);
 
         n = pairs.length;
-        dp = new int[n][n];
+        dp = new int[1001][1001];
 
         for (int[] row : dp)
             Arrays.fill(row, -1);
