@@ -1,42 +1,21 @@
-import java.util.Arrays;
-
 class Solution {
+    public int solve(int pi,int ci,int[][] pairs,int[][] dp){
+        if(ci==pairs.length) return 0;
 
-    int[][] dp;
-    int n;
-
-    public int solve(int prevIndex, int currIndex, int[][] pairs) {
-
-        if (currIndex == n)
-            return 0;
-
-        if (prevIndex != -1 && dp[prevIndex][currIndex] != -1)
-            return dp[prevIndex][currIndex];
-
+        if(dp[pi+1][ci]!=-1) return dp[pi+1][ci];
         int pick = 0;
-
-        if (prevIndex == -1 || pairs[prevIndex][1] < pairs[currIndex][0]) {
-            pick = 1 + solve(currIndex, currIndex + 1, pairs);
+        if(pi==-1 || pairs[pi][1]<pairs[ci][0]){
+            pick = 1+solve(ci,ci+1,pairs,dp);
         }
+        int skip = solve(pi,ci+1,pairs,dp);
 
-        int skip = solve(prevIndex, currIndex + 1, pairs);
-
-        if (prevIndex != -1)
-            dp[prevIndex][currIndex] = Math.max(pick, skip);
-
-        return Math.max(pick, skip);
+        return dp[pi+1][ci] = Math.max(pick,skip);
     }
-
     public int findLongestChain(int[][] pairs) {
-
-        Arrays.sort(pairs, (a, b) -> a[0]-b[0]);
-
-        n = pairs.length;
-        dp = new int[1001][1001];
-
-        for (int[] row : dp)
-            Arrays.fill(row, -1);
-
-        return solve(-1, 0, pairs);
+        Arrays.sort(pairs,(a,b)->a[0]-b[0]);
+        int n = pairs.length;
+        int[][] dp = new int[n+1][n];
+        for(int[] d : dp) Arrays.fill(d, -1);
+        return solve(-1, 0, pairs, dp);
     }
 }
