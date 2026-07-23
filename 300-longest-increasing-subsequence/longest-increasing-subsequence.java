@@ -1,39 +1,27 @@
 class Solution {
 
-    int n;
-    int[][] dp;
+    public int solve(int pi,int ci,int[] nums,int[][] dp){
+        if(ci==nums.length) return 0;
 
-    public int lis(int[] nums, int prevIdx, int currIdx) {
+        if(dp[pi+1][ci]!=-1) return dp[pi+1][ci];
 
-        if (currIdx == n)
-            return 0;
+        int pick = 0;
 
-        if (prevIdx != -1 && dp[prevIdx][currIdx] != -1)
-            return dp[prevIdx][currIdx];
-
-        int taken = 0;
-
-        if (prevIdx == -1 || nums[currIdx] > nums[prevIdx]) {
-            taken = 1 + lis(nums, currIdx, currIdx + 1);
+        if(pi==-1 || nums[pi]<nums[ci]){
+            pick = 1+solve(ci,ci+1,nums,dp);
         }
+        int skip = solve(pi,ci+1,nums,dp);
 
-        int notTaken = lis(nums, prevIdx, currIdx + 1);
-
-        if (prevIdx != -1)
-            dp[prevIdx][currIdx] = Math.max(taken, notTaken);
-
-        return Math.max(taken, notTaken);
+        return dp[pi+1][ci] = Math.max(pick,skip);
     }
-
     public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int dp[][] = new int[n][n];
 
-        n = nums.length;
 
-        dp = new int[n][n];
+        for(int[] d : dp) Arrays.fill(d,-1);
 
-        for (int[] row : dp)
-            Arrays.fill(row, -1);
-
-        return lis(nums, -1, 0);
+        return solve(-1,0,nums,dp);
+        
     }
 }
