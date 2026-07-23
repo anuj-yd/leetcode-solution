@@ -20,10 +20,8 @@ class Solution {
 
         int pick = 0;
 
-        if (pi == -1) {
-            pick = 1 + solve(ci, ci + 1, w, dp);
-        } else if (w[ci].length() - w[pi].length() == 1 &&
-                isPred(0, 0, w[pi], w[ci])) {
+        if (pi == -1 || (w[ci].length() - w[pi].length() == 1 &&
+                isPred(0, 0, w[pi], w[ci]))) {
 
             pick = 1 + solve(ci, ci + 1, w, dp);
         }
