@@ -27,13 +27,11 @@ class Solution {
         while(!pq.isEmpty()){
             Pair p = pq.poll();
 
-            int node = p.node;
-            int wt = p.wt;
-            if (wt > ans[node]) continue;
+            if (p.wt > ans[p.node]) continue;
 
-            for(Pair nbr : adj.get(node)){
-                if(nbr.wt+wt<ans[nbr.node]){
-                    ans[nbr.node] = nbr.wt+wt;
+            for(Pair nbr : adj.get(p.node)){
+                if(nbr.wt+p.wt<ans[nbr.node]){
+                    ans[nbr.node] = nbr.wt+p.wt;
                     pq.offer(new Pair(nbr.node,ans[nbr.node]));
                 }
             }
