@@ -15,11 +15,7 @@ class Solution {
         for(int i=0;i<=n;i++) adj.add(new ArrayList<>());
 
         for(int t[] : times){
-            int u = t[0];
-            int v = t[1];
-            int wt = t[2];
-
-            adj.get(u).add(new Pair(v,wt));
+            adj.get(t[0]).add(new Pair(t[1],t[2]));
         }
 
         PriorityQueue<Pair> pq = new PriorityQueue<>((a,b)->a.wt-b.wt);
