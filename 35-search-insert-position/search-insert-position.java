@@ -1,20 +1,20 @@
 class Solution {
-    public int searchInsert(int[] nums, int target) {
-        int low = 0;
-        int high = nums.length-1;
-        int idx = nums.length;
-        while(low<=high){
-            int mid = low + (high-low)/2;
+    public int searchInsert(int[] arr, int target) {
+        int l = 0;
+        int h = arr.length - 1;
 
-            if(nums[mid]>=target){
-                idx = mid;
-                high = mid-1;
-            }else{
-                low = mid+1;
+        while (l <= h) {
+            int mid = l + (h - l) / 2;
 
+            if (arr[mid] == target) {
+                return mid;
+            } else if (arr[mid] < target) {
+                l = mid + 1;
+            } else {
+                h = mid - 1;
             }
         }
-        return idx;
-        
+
+        return l;
     }
 }
