@@ -1,31 +1,31 @@
 class Solution {
-    private boolean minTime(int[] piles,int mid,int h){
-        long time = 0;
-        for(int n : piles){
-            time+= (n+mid-1)/(long)mid;
-            // time+= (long)Math.ceil(n/(double)mid);
+    public boolean isPos(int piles[],int h,int mid){
+        long reqH = 0;
+
+        for(int i=0;i<piles.length;i++){
+            reqH += (piles[i] + mid-1)/mid;
         }
-        if(time<=h) return true;
-        return false;
+
+        return reqH<=h;
     }
-    public int minEatingSpeed(int[] piles, int h) {
-        int max = Integer.MIN_VALUE;
-        for(int n : piles){
-            if(n>max) max = n;
+    public int minEatingSpeed(int[] piles, int hrs) {
+        int l = 1;
+        int h = Integer.MIN_VALUE;
+
+        for(int p : piles){
+            h = Math.max(h,p);
         }
-        int low = 1;
-        int high = max;
         int ans = -1;
-        while(low<=high){
-            int mid = low+(high-low)/2;
-            if(minTime(piles,mid,h)){
+        while(l<=h){
+            int mid = l+(h-l)/2;
+
+            if(isPos(piles,hrs,mid)){
                 ans = mid;
-                high = mid-1;
+                h = mid-1;
             }else{
-                low = mid+1;
+                l = mid+1;
             }
         }
         return ans;
-        
     }
 }
