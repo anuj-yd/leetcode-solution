@@ -15,7 +15,7 @@ class Solution {
         for(int p : piles){
             h = Math.max(h,p);
         }
-        int ans = -1;
+        int ans = h;
         while(l<=h){
             int mid = l+(h-l)/2;
 
