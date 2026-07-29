@@ -1,46 +1,43 @@
 class Solution {
-    public boolean required(int day,int[] bloomDay,int m,int k){
+    public boolean isPos(int[] arr,int m,int k,int mid){
+        int reqB = 0;
         int count = 0;
-        int bouq = 0;
-        for(int n : bloomDay){
-            if(n<=day){
+
+        for(int i=0;i<arr.length;i++){
+            if(mid>=arr[i]){
                 count++;
+
+                if(count == k){
+                    reqB++;
+                    count=0;
+                }
             }else{
-                bouq += (count/k);
                 count = 0;
             }
         }
-        bouq += (count/k);
-        if(bouq>=m) return true;
-        return false;
+
+
+
+        return reqB>=m;
     }
     public int minDays(int[] bloomDay, int m, int k) {
-        int n = bloomDay.length;
-        long val = (long)m*k;
-        if(val>n) return -1; 
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
-        
-        for(int i=0;i<bloomDay.length;i++){
-            if(bloomDay[i]>max) max = bloomDay[i];
-            if(bloomDay[i]<min) min = bloomDay[i];
+        int l = Integer.MAX_VALUE;
+        int h = Integer.MIN_VALUE;
+        for(int day : bloomDay){
+            l = Math.min(l, day);
+            h = Math.max(h, day);
         }
-
-        int low = min;
-        int high = max;
         int ans = -1;
-        while(low<=high){
-            int mid = low+(high-low)/2;
-            boolean req = required(mid,bloomDay,m,k);
-            if(req){
+        while(l<=h){
+            int mid = l+(h-l)/2;
+
+            if(isPos(bloomDay,m,k,mid)){
                 ans = mid;
-                high = mid-1;
+                h = mid-1;
             }else{
-                low = mid+1;
+                l = mid+1;
             }
-            
         }
         return ans;
-        
     }
 }
