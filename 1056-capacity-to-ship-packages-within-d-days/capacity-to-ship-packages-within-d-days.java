@@ -1,41 +1,42 @@
 class Solution {
-    private boolean day(int mid,int[] weights,int days){
-        int day = 1;
-        int load = weights[0];
-        for(int i=1;i<weights.length;i++){
-            if(load+weights[i]<=mid){
-                load += weights[i];
+
+    public boolean isPos(int wt[],int mid,int days){
+        int d = 1;
+        int load = 0;
+
+        for(int i=0;i<wt.length;i++){
+
+            if(wt[i]+load<=mid){
+                load += wt[i];
             }else{
-                day = day+1;
-                load = weights[i];
+                d++;
+                load = wt[i];
             }
+
         }
-        return day<=days;
+        return d<=days;
     }
     public int shipWithinDays(int[] weights, int days) {
-        int max = Integer.MIN_VALUE;
-        int sum = 0;
-        for(int n : weights){
-            if(n>max) max = n;
-            sum+=n;
-        }
 
-        int low = max;
-        int high = sum;
+        int l = 0;
+        int h = 0;
+        for(int wt : weights){
+            l = Math.max(l,wt);
+            h+=wt;
+        }
         int ans = -1;
 
-        while(low<=high){
-            int mid = low + (high-low)/2;
-            
-            if(day(mid,weights,days)){
+        while(l<=h){
+            int mid = l+(h-l)/2;
+
+            if(isPos(weights,mid,days)){
                 ans = mid;
-                high = mid-1;
+                h = mid-1;
             }else{
-                low = mid+1;
+                l = mid+1;
             }
         }
         return ans;
-        
         
     }
 }
