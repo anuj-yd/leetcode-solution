@@ -1,5 +1,6 @@
 class Solution {
     public boolean isPos(int[] arr,int m,int k,int mid){
+        
         int reqB = 0;
         int count = 0;
 
@@ -21,6 +22,9 @@ class Solution {
         return reqB>=m;
     }
     public int minDays(int[] bloomDay, int m, int k) {
+        if((long)m*k>bloomDay.length){
+            return -1;
+        }
         int l = Integer.MAX_VALUE;
         int h = Integer.MIN_VALUE;
         for(int day : bloomDay){
