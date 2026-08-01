@@ -1,33 +1,23 @@
 class Solution {
 
-    public boolean solve(int i,int j,int s1,int s2,boolean p1,int[] nums){
-        if(i>j){
-            if(s1>=s2) return true;
-            return false;
+    public int solve(int i, int j, int[] nums) {
+
+        if(i > j){
+            return 0;
         }
 
-        if(p1==false){
+        int picki = nums[i] - solve(i + 1, j, nums);
+        int pickj = nums[j] - solve(i, j - 1, nums);
 
-            boolean picki = solve(i+1,j,s1+nums[i],s2,true,nums);
-            boolean pickj = solve(i,j-1,s1+nums[j],s2,true,nums);
-
-            return picki || pickj;
-
-        }else{
-
-            boolean picki = solve(i+1,j,s1,s2+nums[i],false,nums);
-            boolean pickj = solve(i,j-1,s1,s2+nums[j],false,nums);
-            return picki && pickj;
-        }
+        return Math.max(picki, pickj);
     }
 
     public boolean predictTheWinner(int[] nums) {
 
-        int i = 0;
-        int j = nums.length-1;
-        int s1 = 0,s2 = 0;
-        boolean p1 = false;
-        return solve(i,j,s1,s2,p1,nums);
-        
+        int n = nums.length;
+
+        int ans = solve(0, n - 1, nums);
+
+        return ans >= 0;
     }
 }
