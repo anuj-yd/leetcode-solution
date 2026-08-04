@@ -1,39 +1,39 @@
 class Solution {
-    private boolean required(int[] nums,int k,int mid){
-        int reqsubarray = 1;
-        int totalSum = 0;
-        for(int i=0;i<nums.length;i++){
-            if(totalSum+nums[i]<=mid){
-                totalSum+=nums[i];
+    public boolean isPos(int mid,int[] arr,int k){
+        int reqK = 1;
+        int reqSum = arr[0];
+
+        for(int i=1;i<arr.length;i++){
+            if(arr[i]+reqSum<=mid){
+                reqSum += arr[i];
             }else{
-                reqsubarray++;
-                totalSum=nums[i];
+                reqSum = arr[i];
+                reqK++;
             }
         }
-        return reqsubarray<=k;
+        return reqK<=k;
     }
     public int splitArray(int[] nums, int k) {
-        int len = nums.length;
-        if(len<k) return -1;
-        int max = Integer.MIN_VALUE;
-        int sum = 0;
-        for(int n : nums){
-            if(max<n) max = n;
-            sum+=n;
-        }
+        int l = 0;
+        int h = 0;
 
-        int low = max;
-        int high = sum;
+        for(int val : nums){
+            l = Math.max(val,l);
+            h += val;
+        }
         int ans = -1;
-        while(low<=high){
-            int mid = low+(high-low)/2;
-            if(required(nums,k,mid)){
+        while(l<=h){
+            int mid = l+(h-l)/2;
+
+            if(isPos(mid,nums,k)){
                 ans = mid;
-                high = mid-1;
+                h = mid-1;
             }else{
-                low = mid+1;
+                l = mid+1;
             }
         }
+
         return ans;
+        
     }
 }
