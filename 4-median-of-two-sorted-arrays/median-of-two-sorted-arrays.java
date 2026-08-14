@@ -1,32 +1,41 @@
 class Solution {
-    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int n1 = nums1.length;
-        int n2 = nums2.length;
-        int n = n1 + n2;
-        int[] ans = new int[n];
-
-        int i = 0, j = 0, k = 0;
-
-        // merge two sorted arrays
-        while (i < n1 && j < n2) {
-            if (nums1[i] < nums2[j]) {
-                ans[k++] = nums1[i++];
-            } else {
-                ans[k++] = nums2[j++];
+    public double findMedianSortedArrays(int[] a,int[] b) {  
+        if(a.length>b.length){
+            return findMedianSortedArrays(b,a);
+        }
+        
+        int m = a.length;
+        int n = b.length;
+        int l = 0;
+        int h = m;
+        
+        while(l<=h){
+            int mid = l+(h-l)/2;
+            
+            int px = mid;
+            int py = (m+n+1)/2 - px;
+            
+            int x1 = (px==0) ? Integer.MIN_VALUE : a[px-1];
+            int x2 = (py==0) ? Integer.MIN_VALUE : b[py-1];
+            int x3 = (px==m) ? Integer.MAX_VALUE : a[px];
+            int x4 = (py==n) ? Integer.MAX_VALUE : b[py];
+            
+            if(x1<=x4 && x2<=x3){
+                
+                if((m+n)%2==1){
+                    return Math.max(x1,x2);
+                }
+                
+                return (Math.max(x1,x2)+Math.min(x3,x4))/2.0;
+                
             }
+            if(x1>x4){
+                h=mid-1;
+            }else{
+                l=mid+1;
+            }
+            
         }
-        while (i < n1) {
-            ans[k++] = nums1[i++];
-        }
-        while (j < n2) {
-            ans[k++] = nums2[j++];
-        }
-
-        // find median
-        if (n % 2 == 1) {
-            return ans[n / 2];
-        } else {
-            return (ans[n / 2 - 1] + ans[n / 2]) / 2.0;
-        }
+        return -1; 
     }
 }
