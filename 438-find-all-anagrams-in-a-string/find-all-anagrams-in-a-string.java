@@ -1,18 +1,11 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-
         int[] freq = new int[26];
-
         for(char ch : p.toCharArray()){
             freq[ch-'a']++;
-        }
-        
-        int i = 0;
-        int j = 0;
-        int n = p.length();
-        int count = n;
+        }   
+        int i = 0,j = 0,n = p.length(),count = n;
         List<Integer> ans = new ArrayList<>();
-
         while(j<s.length()){
             char ch = s.charAt(j);
 
@@ -31,8 +24,6 @@ class Solution {
 
             if(j-i+1==n && count == 0) ans.add(i);
             j++;
-           
-
         }
 
         return ans;
