@@ -2,4 +2,5 @@
 select ep.name,b.bonus from Employee ep
 left join Bonus b
 on b.empId = ep.empId
-where b.bonus < 1000 or b.bonus is null;
+group by ep.empId
+having b.bonus < 1000 or b.bonus is null;
