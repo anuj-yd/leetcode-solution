@@ -3,5 +3,5 @@
 select e.name from Employee e
 join Employee ep
 on e.id = ep.managerId
-group by e.id,e.name
+group by e.id
 having count(ep.id) >= 5 ;
