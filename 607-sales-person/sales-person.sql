@@ -1,8 +1,9 @@
-# Write your MySQL query statement below
-select sp.name from SalesPerson sp
-left join Orders o
-on sp.sales_id = o.sales_id
-left join Company c
-on c.com_id = o.com_id and c.name = "RED"
-group by sp.sales_id, sp.name
-having COUNT(c.com_id) = 0;
+SELECT sp.name
+FROM SalesPerson sp
+LEFT JOIN Orders o
+    ON sp.sales_id = o.sales_id
+LEFT JOIN Company c
+    ON c.com_id = o.com_id 
+    AND c.name = "RED"
+GROUP BY sp.sales_id, sp.name
+HAVING COUNT(c.com_id) = 0;
