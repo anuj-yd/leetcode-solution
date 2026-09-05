@@ -17,15 +17,14 @@ class Solution {
             sum += nums[j];
             
             map.put(nums[j],map.getOrDefault(nums[j],0)+1);
-    
-            while(j-i+1>k){
+            
+            while(j-i+1>k || j-i+1>map.size()){
                 map.put(nums[i], map.get(nums[i]) - 1);
                 if(map.get(nums[i])==0) map.remove(nums[i]);
                 sum -= nums[i];
                 i++;
             }
-
-            if(j-i+1 == k && map.size()==k){
+            if(map.size()==(j-i+1) && j-i+1==k){
                 maxSum = Math.max(sum,maxSum);
             }
             j++;
