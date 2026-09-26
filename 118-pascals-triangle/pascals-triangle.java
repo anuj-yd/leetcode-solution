@@ -21,11 +21,7 @@ class Solution {
             int v1 = 0;
             int v2 = 1;
             for(int j=0;j<i-1;j++){
-                int sum = t.get(v1)+t.get(v2);
-                tp.add(sum);
-                v1++;
-                v2++;
-
+                tp.add(t.get(v1++)+t.get(v2++));
             }
             tp.add(1);
             ans.add(tp);
