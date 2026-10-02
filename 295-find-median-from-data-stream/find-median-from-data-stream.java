@@ -21,8 +21,7 @@ class MedianFinder {
         if(lmax.size()-rmin.size()>1){
             rmin.offer(lmax.poll());
         }
-
-        if(rmin.size()>lmax.size()){
+        else if(rmin.size()>lmax.size()){
             lmax.offer(rmin.poll());
         }
 
