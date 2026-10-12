@@ -2,31 +2,23 @@ class Solution {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> ans = new ArrayList<>();
 
-        List<Integer> temp = new ArrayList<>();
-        temp.add(1);
-        ans.add(temp);
-        if(numRows==1) return ans;
-        List<Integer> temp2 = new ArrayList<>();
-        temp2.add(1);
-        temp2.add(1);
-        ans.add(temp2);
-        if (numRows<=2) return ans;
+        ans.add(new ArrayList<>(Arrays.asList(1)));
 
-
-        for(int i=2;i<numRows;i++){
-
-            List<Integer> t = ans.get(i-1);
-            List<Integer> tp = new ArrayList<>();
-            tp.add(1);
-            int v1 = 0;
-            int v2 = 1;
-            for(int j=0;j<i-1;j++){
-                tp.add(t.get(v1++)+t.get(v2++));
-            }
-            tp.add(1);
-            ans.add(tp);
-        }
-        return ans;
+        if(numRows == 1) return ans;
         
+        for(int i=1;i<numRows;i++){
+            List<Integer> temp = new ArrayList<>();
+            temp.add(1);
+            for(int j=1;j<i;j++){
+                int v1 = ans.get(i-1).get(j);
+                int v2 = ans.get(i-1).get(j-1);
+                temp.add(v1+v2);
+            }
+
+            temp.add(1);
+            ans.add(temp);
+        }
+
+        return ans;
     }
 }
