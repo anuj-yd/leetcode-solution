@@ -1,44 +1,48 @@
 class Solution {
-    public void setZeroes(int[][] matrix){
-        // length of row and col
-        int r=matrix.length;
-        int c=matrix[0].length;
-        // boolean array of rr and cc to check value of any row col is zero
-        boolean rr[]=new boolean[r];
-        boolean cc[]=new boolean[c];
+    public void setZeroes(int[][] matrix) {
 
-        // loops to check if the any row having zero at it's index then assingn 
-        // bool rr and cc as true;
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                if(matrix[i][j]==0){
-                    rr[i]=true;
-                    cc[j]=true;
+        int n = matrix.length;
+        int m = matrix[0].length;
+
+        boolean row = false, col = false;
+
+        for(int i = 0; i < n; i++) {
+            if(matrix[i][0] == 0) col = true;
+        }
+
+        for(int j = 0; j < m; j++) {
+            if(matrix[0][j] == 0) row = true;
+        }
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(matrix[i][j] == 0){
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
                 }
             }
         }
-// loop to check bool row is true or not
-        for(int i=0;i<r;i++){
-            if(rr[i]){
-                for(int j=0;j<c;j++) {
+
+
+        for(int i=1;i<n;i++){
+            for(int j=1;j<m;j++){
+                if(matrix[i][0]==0 || matrix[0][j]==0){
                     matrix[i][j] = 0;
                 }
             }
         }
 
-// loop to check bool col is true or not
-        for(int j=0;j<c;j++) {
-            if(cc[j]){
-                for(int i=0;i<r;i++){
-                    matrix[i][j] = 0;
-                }
+        if(row){
+            for(int j = 0; j < m; j++) {
+                matrix[0][j] = 0;
             }
         }
 
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                System.out.print(matrix[i][j]);
+        if(col) {
+            for(int i = 0; i < n; i++) {
+                matrix[i][0] = 0;
             }
-        }       
+        }
+        
     }
 }
