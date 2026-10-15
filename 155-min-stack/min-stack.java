@@ -8,9 +8,8 @@ class MinStack {
     
     public void push(int value) {
 
-        if(!st.isEmpty()){
-            int min = Math.min(st.peek()[1],value);
-            st.push(new int[]{value,min});
+        if(!st.isEmpty() && st.peek()[1]<value){
+            st.push(new int[]{value,st.peek()[1]});
         }else{
             st.push(new int[]{value,value});
         }
