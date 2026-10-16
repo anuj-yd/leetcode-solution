@@ -1,19 +1,18 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
 class Solution {
     public int firstUniqChar(String s) {
         int[] freq = new int[26];
-        Queue<Integer> q = new LinkedList<>();
-        
-        for (int i = 0; i < s.length(); i++) {
-            freq[s.charAt(i) - 'a']++;
-            q.offer(i);
+
+        for(char ch : s.toCharArray()){
+            freq[ch-'a']++;
         }
-        
-        while (!q.isEmpty() && freq[s.charAt(q.peek()) - 'a'] > 1) {
-            q.poll();
+
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if(freq[ch-'a']==1){
+                return i;
+            }
         }
-        return q.isEmpty() ? -1 : q.peek();
+        return -1;
+        
     }
 }
