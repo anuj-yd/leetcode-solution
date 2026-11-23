@@ -1,9 +1,6 @@
 class ProductOfNumbers {
-
-    List<Integer> ans;
     List<Integer> pro;
     public ProductOfNumbers() {
-        this.ans = new ArrayList<>();
         this.pro = new ArrayList<>();
         pro.add(1);
     }
@@ -16,7 +13,6 @@ class ProductOfNumbers {
             int val = pro.get(pro.size()-1);
             pro.add(val*num);
         }
-        ans.add(num);
     }
     
     public int getProduct(int k) {
